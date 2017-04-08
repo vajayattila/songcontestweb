@@ -1,7 +1,7 @@
 <?php
 /**
  *  @file helper.php
- *  @brief Helper class for SongContestWeb
+ *  @brief Helper class for SongContestWeb. Project home: https://github.com/vajayattila/songcontestweb
  *	@author Vajay Attila (vajay.attila@gmail.com)
  *  @copyright MIT License (MIT)
  *  @date 2017.04.07

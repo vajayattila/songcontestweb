@@ -1,7 +1,7 @@
 <?php
 /**
  *  @file abstracts.php
- *  @brief Abstract classes for SongContestWeb
+ *  @brief Abstract classes for SongContestWeb. Project home: https://github.com/vajayattila/songcontestweb
  *	@author Vajay Attila (vajay.attila@gmail.com)
  *  @copyright MIT License (MIT)
  *  @date 2017.04.07
