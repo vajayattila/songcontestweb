@@ -57,7 +57,9 @@ class workframe extends system{
 	public function run(){
 		echo 'Request method: '.$this->m_request_method;
 		echo 'Request uri: '.$this->m_request_uri;
-		print_r($this->get_array_of_dependencies(), false);
+		print_r(
+			$this->get_array_of_dependencies(), false
+		);
 	}
 }
 
