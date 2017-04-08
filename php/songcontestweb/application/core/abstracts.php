@@ -60,7 +60,6 @@ abstract class dependency{
 	 * @param [in] $dependency Array of dependencies.
 	 */
 	protected function add_dependency($classname, $dependency){
-		//print_r($dependency);
 		$this->m_dependencies[$classname]=$dependency;
 	}
 	
