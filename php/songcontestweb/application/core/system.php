@@ -8,7 +8,7 @@
  *  @version 1.0.0.0
  */
 
-require_once('application/core/abstracts.php');
+require_once('application/core/dependency.php');
 
 /** @brief helpers class */ 
 class helper extends dependency{
