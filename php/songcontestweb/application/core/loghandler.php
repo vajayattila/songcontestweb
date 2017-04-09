@@ -19,11 +19,37 @@ class loghandler{
 		$this->m_confighandler=new confighandler();
 	}
 	
-	public function getclassname(){
+	public function get_class_name(){
 		return 'loghandler';
 	}
 	
-	public function getversion(){
+	public function get_version(){
 		return '1.0.0.0';
 	}
+	
+	/**
+	 *  @brief Log message
+	 *
+	 *  @param [in] $logtype Defined in config.php logger sections. for example: 'error', 'warning', 'info', 'system'
+	 *  @param [in] $message
+	 */
+	public function log_message($logtype, $message){
+		$value=$this->m_confighandler->get_value('logger', $logtype);
+		if($value!==false){
+		// check log folder
+			if (!file_exists('application/logs')) {
+				mkdir('application/logs', 0777, true);
+			}
+			// log file name
+			$filename='log-'.@date("Y-m-d").'.log';
+			$fh=fopen('application/logs/'.$filename, 'a');
+			if($fh!==FALSE)
+			{
+				$logline=@sprintf('%-7s', strtoupper($logtype)).' - '.@date("Y-m-d H:i:s").' --> '.$message."\r\n";
+				fputs($fh, $logline);
+				fclose($fh);
+			}
+		}
+	}
+
 }

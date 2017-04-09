@@ -20,10 +20,13 @@ class dependency{
 	
 	public function __construct(){
 		// Setup dependencies
-		$m_confighandler=new confighandler();
-		$m_loghandler=new loghandler();
-		dependency::add_class($m_confighandler->getclassname(), $m_confighandler->getversion());
-		dependency::add_class($m_loghandler->getclassname(), $m_loghandler->getversion());
+		$this->m_confighandler=new confighandler();
+		$this->m_loghandler=new loghandler();
+		//dependency::add_class($this->m_confighandler->get_class_name(), $this->m_confighandler->get_version());
+		//dependency::add_class($this->m_loghandler->get_class_name(), $this->m_loghandler->get_version());
+		$this->m_loghandler->log_message('system', 'Loading workframe...');
+		dependency::setup_dependencies($this->m_confighandler->get_class_name(), $this->m_confighandler->get_version());
+		dependency::setup_dependencies($this->m_loghandler->get_class_name(), $this->m_loghandler->get_version());
 		dependency::setup_dependencies(
 			'dependency', '1.0.0.1',
 			array(
@@ -38,7 +41,7 @@ class dependency{
 	 * 
 	 * @return a string
 	 */
-	public function getclassname(){
+	public function get_class_name(){
 		return 'dependency';	
 	}
 	
@@ -47,8 +50,8 @@ class dependency{
 	 * 
 	 * @return a string for example: 1.0.0.0
 	 */
-	public function getversion(){
-		return $this->m_classes[$this->getclassname()];	
+	public function get_version(){
+		return $this->m_classes[$this->get_class_name()];	
 	}
 	
 	/**
@@ -60,7 +63,21 @@ class dependency{
 			'dependencies' => $this->m_dependencies
 		);
 	}
+	
+	public function get_config_value($pconfig_group_name, $pconfig_key_name){
+		return $this->m_confighandler->getvalue($pconfig_group_name, $pconfig_key_name);
+	}
 
+	/**
+	 *  @brief Log message
+	 *
+	 *  @param [in] $logtype Defined in config.php logger sections. for example: 'error', 'warning', 'info', 'system'
+	 *  @param [in] $message
+	 */
+	public function log_message($logtype, $message){
+		$this->m_loghandler->log_message($logtype, $message);
+	}
+	
 	/**
 	 * @brief Add class to dependency system
 	 * @param [in] $classname Name of class
@@ -81,7 +98,8 @@ class dependency{
 	}
 	
 	protected function setup_dependencies($classname, $version, $dependencies=NULL){
-		$this->add_class($classname::getclassname(), $version);
+		$this->m_loghandler->log_message('system', 'Register class: '.$classname);
+		$this->add_class($classname::get_class_name(), $version);
 		if($dependencies){
 			$this->add_dependency($classname, $dependencies);
 		}

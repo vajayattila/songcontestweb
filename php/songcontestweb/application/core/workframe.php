@@ -19,7 +19,7 @@ class workframe extends system{
 		parent::__construct();
 		// Setup dependencies
 		workframe::setup_dependencies(
-			workframe::getclassname(), '1.0.0.0',
+			workframe::get_class_name(), '1.0.0.0',
 			//array(
 			  array(
 			  	'system' => '1.0.0.0',
@@ -39,7 +39,7 @@ class workframe extends system{
 	 *
 	 * @return Return the class name
 	 */
-	public function getclassname() {
+	public function get_class_name() {
 		return 'workframe';
 	}
 	
@@ -60,6 +60,7 @@ class workframe extends system{
 		print_r(
 			$this->get_array_of_dependencies(), false
 		);
+		$this->log_message('system', 'Ready.');
 	}
 }
 

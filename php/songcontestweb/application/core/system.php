@@ -17,7 +17,7 @@ class helper extends dependency{
 		parent::__construct();
 		// Setup dependencies
 		helper::setup_dependencies(
-			helper::getclassname(), '1.0.0.0',
+			helper::get_class_name(), '1.0.0.0',
 			array('dependency'=>'1.0.0.0')	
 		);
 	}
@@ -27,7 +27,7 @@ class helper extends dependency{
 	 *
 	 * @return Return the class name
 	 */
-	public function getclassname() {
+	public function get_class_name() {
 		return 'helper';
 	}
 	
@@ -46,7 +46,7 @@ class system extends helper{
 		parent::__construct();
 		// Setup dependencies
 		system::setup_dependencies(
-			system::getclassname(), '1.0.0.0',
+			system::get_class_name(), '1.0.0.0',
 			array(
 			  'helper'=>'1.0.0.0',
 			  'dependency'=>'1.0.0.0'
@@ -59,7 +59,7 @@ class system extends helper{
 	 *
 	 * @return Return the class name
 	 */
-	public function getclassname() {
+	public function get_class_name() {
 		return 'system';
 	}
 	
