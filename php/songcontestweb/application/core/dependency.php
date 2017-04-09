@@ -22,8 +22,6 @@ class dependency{
 		// Setup dependencies
 		$this->m_confighandler=new confighandler();
 		$this->m_loghandler=new loghandler();
-		//dependency::add_class($this->m_confighandler->get_class_name(), $this->m_confighandler->get_version());
-		//dependency::add_class($this->m_loghandler->get_class_name(), $this->m_loghandler->get_version());
 		$this->m_loghandler->log_message('system', 'Loading workframe...');
 		dependency::setup_dependencies($this->m_confighandler->get_class_name(), $this->m_confighandler->get_version());
 		dependency::setup_dependencies($this->m_loghandler->get_class_name(), $this->m_loghandler->get_version());
