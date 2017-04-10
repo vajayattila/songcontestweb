@@ -1,19 +1,21 @@
 <?php
 /**
  *  @file workframe.php
- *  @brief Workframe for SongContestWeb. Project home: https://github.com/vajayattila/songcontestweb
+ *  @brief Workframe for MutyurPHPMVC. Project home: https://github.com/vajayattila/songcontestweb
  *	@author Vajay Attila (vajay.attila@gmail.com)
  *  @copyright MIT License (MIT)
  *  @date 2017.04.07
  *  @version 1.0.0.0
  */
 
+define ( 'mutyurphpmvc_inited', true );
+
 require_once('application/core/system.php');
 
 /** @brief Workframe class*/
 class workframe extends system{
-	protected $m_request_method;
-	protected $m_request_uri;
+	private $m_request_method;
+	private $m_request_uri;
 	
 	public function __construct(){
 		parent::__construct();
@@ -23,8 +25,6 @@ class workframe extends system{
 			//array(
 			  array(
 			  	'system' => '1.0.0.0',
-			  	'helper'=>'1.0.0.0',
-			  	'dependency'=>'1.0.0.0'
 			  )
 			//)
 		);
@@ -55,6 +55,9 @@ class workframe extends system{
 	
 	/** @brief Application entry point.*/
 	public function run(){
+		$filepath='application/controllers/'.$this->get_method_name().'.php';
+		echo $filepath;
+		
 		echo 'Request method: '.$this->m_request_method;
 		echo 'Request uri: '.$this->m_request_uri;
 		print_r(

@@ -1,7 +1,7 @@
 <?php
 /**
  *  @file index.php
- *  @brief Index file for SongContestWeb. Project home: https://github.com/vajayattila/songcontestweb
+ *  @brief Index file for MutyurPHPMVC. Project home: https://github.com/vajayattila/songcontestweb
  *	@author Vajay Attila (vajay.attila@gmail.com)
  *  @copyright MIT License (MIT)
  *  @date 2017.04.07

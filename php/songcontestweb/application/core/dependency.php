@@ -1,4 +1,8 @@
 <?php
+
+if (! defined ( 'mutyurphpmvc_inited' ))
+	exit ( 'No direct script access allowed' );
+	
 /**
  *  @file dependency.php
  *  @brief Dependency classes for SongContestWeb. Project home: https://github.com/vajayattila/songcontestweb
@@ -13,22 +17,22 @@ require_once('application/core/loghandler.php');
 
 /** @dependancy class */
 class dependency{
-	protected $m_classes=array();
-	protected $m_dependencies=array();
-	protected $m_confighandler;
-	protected $m_loghandler;
+	private $m_classes=array();
+	private $m_dependencies=array();
+	private $m_confighandler;
+	private $m_loghandler;
 	
 	public function __construct(){
 		// Setup dependencies
 		$this->m_confighandler=new confighandler();
 		$this->m_loghandler=new loghandler();
-		$this->m_loghandler->log_message('system', 'Loading workframe...');
+		$this->m_loghandler->log_message('system', 'Loading MÜTYÜR PHP MVC workframe...');
 		dependency::setup_dependencies($this->m_confighandler->get_class_name(), $this->m_confighandler->get_version());
 		dependency::setup_dependencies($this->m_loghandler->get_class_name(), $this->m_loghandler->get_version());
 		dependency::setup_dependencies(
-			'dependency', '1.0.0.1',
+			'dependency', '1.0.0.2',
 			array(
-				'confighandler'=>'1.0.0.0',
+				'confighandler'=>'1.0.0.1',
 				'loghandler'=>'1.0.0.0'
 			)
 		);
@@ -63,7 +67,7 @@ class dependency{
 	}
 	
 	public function get_config_value($pconfig_group_name, $pconfig_key_name){
-		return $this->m_confighandler->getvalue($pconfig_group_name, $pconfig_key_name);
+		return $this->m_confighandler->get_value($pconfig_group_name, $pconfig_key_name);
 	}
 
 	/**
