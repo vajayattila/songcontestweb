@@ -24,7 +24,7 @@ class workframe extends system{
 			workframe::get_class_name(), '1.0.0.0',
 			//array(
 			  array(
-			  	'system' => '1.0.0.0',
+			  	'system' => '1.0.0.1',
 			  )
 			//)
 		);
