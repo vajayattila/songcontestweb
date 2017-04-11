@@ -94,7 +94,7 @@ class workframe extends system{
 		return $model;
 	}
 	
-	public function load_view($viewname, $data){
+	public function load_view($viewname, $model, $data){
 		$filepath='application/views/'.$viewname.'.php';
 		require_once $filepath;
 		$this->log_message('system', 'Call \''.$viewname.'\' view.');

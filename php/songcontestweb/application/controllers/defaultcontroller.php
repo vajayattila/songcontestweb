@@ -19,13 +19,13 @@ class defaultcontroller extends workframe{
 		$model=$this->load_model('defaultmodel');
 		$this->get_request_uri();
 		$data=array(
-				'baseurl' => $model->get_base_url(),
-				'message' => $model->get_message(),
-				'request_uri' => $this->get_request_uri(),
-				'dependencies' => $this->get_array_of_dependencies()
+			'baseurl' => $model->get_base_url(),
+			'message' => $model->get_message(),
+			'request_uri' => $this->get_request_uri(),
+			'dependencies' => $this->get_array_of_dependencies()
 		);
 		
-		$this->load_view('defaultview', $data);		
+		$this->load_view('defaultview', $model, $data);		
 	}
 	
 }
