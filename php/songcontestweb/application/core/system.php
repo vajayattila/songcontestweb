@@ -22,7 +22,7 @@ class helper extends dependency{
 		// Setup dependencies
 		helper::setup_dependencies(
 			helper::get_class_name(), '1.0.0.0',
-			array('dependency'=>'1.0.0.0')	
+			array('dependency'=>'1.0.0.3')	
 		);
 	}
 	
@@ -175,6 +175,12 @@ class urlhandler extends helper{
 	public function get_method_name(){
 		return $this->m_methodname;
 	}
+	
+	/** @brief return the requested function's name.*/
+	public function get_function_name(){
+		return $this->m_functionname;
+	}
+	
 }
 
 /** @brief system class */
@@ -183,7 +189,7 @@ class system extends urlhandler{
 		parent::__construct();
 		// Setup dependencies
 		system::setup_dependencies(
-			system::get_class_name(), '1.0.0.1',
+			system::get_class_name(), '1.0.0.2',
 			array(
 			  'urlhandler'=>'1.0.0.0'
 			)

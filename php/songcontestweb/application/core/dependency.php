@@ -24,13 +24,17 @@ class dependency{
 	
 	public function __construct(){
 		// Setup dependencies
-		$this->m_confighandler=new confighandler();
-		$this->m_loghandler=new loghandler();
+		if($this->m_confighandler===NULL){
+			$this->m_confighandler=new confighandler();
+		}
+		if($this->m_loghandler===NULL){
+			$this->m_loghandler=new loghandler();
+		}
 		$this->m_loghandler->log_message('system', 'Loading MÜTYÜR PHP MVC workframe...');
 		dependency::setup_dependencies($this->m_confighandler->get_class_name(), $this->m_confighandler->get_version());
 		dependency::setup_dependencies($this->m_loghandler->get_class_name(), $this->m_loghandler->get_version());
 		dependency::setup_dependencies(
-			'dependency', '1.0.0.2',
+			'dependency', '1.0.0.3',
 			array(
 				'confighandler'=>'1.0.0.1',
 				'loghandler'=>'1.0.0.0'
@@ -80,6 +84,24 @@ class dependency{
 		$this->m_loghandler->log_message($logtype, $message);
 	}
 	
+	/** @brief Add dependencies*/
+	public function add_dependencies($dependencies){
+		if(isset($dependencies)){
+			foreach($dependencies as $key => $value){
+				$this->m_dependencies[$key]=$value;
+			}
+		}
+	}
+
+	/** @brief Add classes*/
+	public function add_classes($classes){
+		if(isset($classes)){
+			foreach($classes as $key => $value){
+				$this->m_classes[$key]=$value;
+			}
+		}
+	}
+	
 	/**
 	 * @brief Add class to dependency system
 	 * @param [in] $classname Name of class
@@ -100,6 +122,12 @@ class dependency{
 	}
 	
 	protected function setup_dependencies($classname, $version, $dependencies=NULL){
+		if($this->m_confighandler===NULL){
+			$this->m_confighandler=new confighandler();
+		}
+		if($this->m_loghandler===NULL){
+			$this->m_loghandler=new loghandler();
+		}
 		$this->m_loghandler->log_message('system', 'Register class: '.$classname);
 		$this->add_class($classname::get_class_name(), $version);
 		if($dependencies){
