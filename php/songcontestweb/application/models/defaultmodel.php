@@ -18,7 +18,8 @@ class defaultmodel extends workframe{
 		$this->setup_dependencies(
 			$this->get_class_name(), '1.0.0.0',
 			array(
-				'workframe'=>'1.0.0.2'
+				'workframe'=>'1.0.0.2',
+				'languagehandler'=>'1.0.0.0'
 			)
 		);
 	}

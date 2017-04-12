@@ -107,8 +107,8 @@ class workframe extends system{
 		require_once $filepath;
 		$ext=new $extension_name();
 		$array_of_dependencies=$ext->get_array_of_dependencies();
-		$this->add_dependencies($array_of_dependencies['dependencies']);
 		$this->add_classes($array_of_dependencies['registred_classes']);
+		$this->add_dependencies($array_of_dependencies['dependencies']);
 		return $ext;
 	}
 	
