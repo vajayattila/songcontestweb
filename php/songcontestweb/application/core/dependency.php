@@ -134,4 +134,15 @@ class dependency{
 			$this->add_dependency($classname, $dependencies);
 		}
 	}
+	
+	/** @brief set directory */
+	public function set_directory($directory){
+		$this->m_confighandler->set_directory($directory);
+	}
+	
+	/** @brief set filename */
+	public function set_filename($filename){
+		$this->m_confighandler->set_filename($filename);
+	}
+	
 }

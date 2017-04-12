@@ -13,9 +13,9 @@ if (! defined ( 'mutyurphpmvc_inited' ))
  */
 
 /** @brief system's settings*/
-	$config['system']=array(
-		'baseurl' => 'http://localhost:8000/'
-	);
+$config['system']=array(
+	'baseurl' => 'http://localhost:8000/'
+);
 	
 /** @brief logger's settings*/
 $config['logger']=array(
@@ -31,3 +31,7 @@ $config['routes']=array(
 	'default' => 'defaultcontroller/index',
 );		
 		
+/** @brief languages*/
+$config['languages']=array(
+		'default' => 'english',
+);

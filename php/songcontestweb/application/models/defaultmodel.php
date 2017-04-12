@@ -1,5 +1,17 @@
 <?php
 
+if (! defined ( 'mutyurphpmvc_inited' ))
+	exit ( 'No direct script access allowed' );
+	
+/**
+ *  @file workframe.php
+ *  @brief Demonstrate models using in MutyurPHPMVC. Project home: https://github.com/vajayattila/songcontestweb
+ *	@author Vajay Attila (vajay.attila@gmail.com)
+ *  @copyright MIT License (MIT)
+ *  @date 2017.04.11
+ *  @version 1.0.0.0
+ */
+
 class defaultmodel extends workframe{
 	
 	public function __construct(){
@@ -15,8 +27,8 @@ class defaultmodel extends workframe{
 		return 'defaultmodel';
 	}
 	
-	public function get_message(){
-		return 'Hello World!';
+	public function get_message($lang){
+		return $lang->get_item('message');
 	}
 	
 }

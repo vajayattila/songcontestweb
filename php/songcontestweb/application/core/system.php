@@ -58,57 +58,13 @@ class urlhandler extends helper{
 		
 		// Setup dependencies
 		urlhandler::setup_dependencies(
-			urlhandler::get_class_name(), '1.0.0.1',
+			urlhandler::get_class_name(), '1.0.0.2',
 			array(
 				'helper'=>'1.0.0.0'
 			)
 		);
-		$tbaseurl=$this->get_base_url();
-		$tbaseurl=substr($tbaseurl, strpos($tbaseurl, '://')+3);
-		$trequesturl = $this->m_acturl = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-		$this->log_message('requestinfo', 'Request URI: '.print_r($trequesturl, true));
-		if(substr($trequesturl, 0, strlen($tbaseurl))==$tbaseurl){ // check baseurl on the begin of request url 
-			$trequesturl=substr($trequesturl, strlen($tbaseurl)); // trim baseurl from the begin of request url
-			// Find parameters
-			$poz=strpos($trequesturl, '?');
-			if($poz!==FALSE){
-				$arr=explode('&', substr($trequesturl, $poz+1));
-				foreach($arr as $item)
-				{
-					$par=explode('=', $item);
-					$this->m_parameters[]=array(
-						'name' => isset($par[0])?urldecode($par[0]):'',
-						'value' => isset($par[1])?urldecode($par[1]):''
-					);
-				}
-				$this->log_message ( 'requestinfo', 'found parameters=' . print_r ( $this->m_parameters, true ) );
-				$trequesturl=substr($trequesturl, 0, strpos($trequesturl, '?'));
-			}else{
-				$this->parameters=array();
-			}
-			if(!$trequesturl|| strtoupper($trequesturl)=='INDEX.PHP'){ // Not found method
-				if(false===$this->get_config_value('routes', 'default')){
-					$err='The default controller is not set in config.php.';
-					$this->log_message ( 'error', $err);
-					die($err);
-				}
-				$trequesturl='default';
-			}else{
-				// remove index.php
-				$trequesturl=str_replace('index.php/', '', $trequesturl);
-				$trequesturl=str_replace('index.php', '', $trequesturl);
-			}
-			if(!$this->parsemethod($trequesturl)){
-				/*Show error*/
-				$arr=explode('/', $trequesturl);
-				$err='The '.$arr[0].' method not found!';
-				log_message ( 'error', $err);
-				die($err);
-			}
-		}else{
-			$err='The requested url not content the baseurl. Please check the system section\'s baseurl value in the config.php';
-			$this->log_message ( 'error', $err);
-			die($err);
+		if(!$this->m_parameters){
+			$this->init_urlhandler();
 		}
 	}
 	
@@ -168,18 +124,103 @@ class urlhandler extends helper{
 
 	/** @brief return the requested controller's name.*/
 	public function get_controller_name(){
+		if(!$this->m_controller){
+			$this->init_urlhandler();
+		}
 		return $this->m_controller;
 	}
 
 	/** @brief return the requested methods's name.*/
 	public function get_method_name(){
+		if(!$this->m_methodname){
+			$this->init_urlhandler();
+		}
 		return $this->m_methodname;
 	}
 	
 	/** @brief return the requested function's name.*/
 	public function get_function_name(){
+		if(!$this->m_functionname){
+			$this->init_urlhandler();
+		}
 		return $this->m_functionname;
 	}
+	
+	/**
+	 * @brief This function returns queryparameters.
+	 */
+	public function get_query_parameters() {
+		if(!$this->m_parameters){
+			$this->init_urlhandler();
+		}
+		return $this->m_parameters;
+	}
+	
+	/**
+	 * @brief This function returns queryparameters.
+	 */
+	public function get_query_parameter($name) {
+		$retval=false;
+		$params=$this->get_query_parameters();
+		if(isset($params)){
+			foreach($params as $item){
+				if($item['name']==$name){
+					$retval=$item['value'];
+				}
+			}
+		}
+		return $retval;
+	}
+	
+	protected function init_urlhandler(){
+		$tbaseurl=$this->get_base_url();
+		$tbaseurl=substr($tbaseurl, strpos($tbaseurl, '://')+3);
+		$trequesturl = $this->m_acturl = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+		$this->log_message('requestinfo', 'Request URI: '.print_r($trequesturl, true));
+		if(substr($trequesturl, 0, strlen($tbaseurl))==$tbaseurl){ // check baseurl on the begin of request url
+			$trequesturl=substr($trequesturl, strlen($tbaseurl)); // trim baseurl from the begin of request url
+			// Find parameters
+			$poz=strpos($trequesturl, '?');
+			if($poz!==FALSE){
+				$arr=explode('&', substr($trequesturl, $poz+1));
+				foreach($arr as $item)
+				{
+					$par=explode('=', $item);
+					$this->m_parameters[]=array(
+							'name' => isset($par[0])?urldecode($par[0]):'',
+							'value' => isset($par[1])?urldecode($par[1]):''
+					);
+				}
+				$this->log_message ( 'requestinfo', 'found parameters=' . print_r ( $this->m_parameters, true ) );
+				$trequesturl=substr($trequesturl, 0, strpos($trequesturl, '?'));
+			}else{
+				$this->parameters=array();
+			}
+			if(!$trequesturl|| strtoupper($trequesturl)=='INDEX.PHP'){ // Not found method
+				if(false===$this->get_config_value('routes', 'default')){
+					$err='The default controller is not set in config.php.';
+					$this->log_message ( 'error', $err);
+					die($err);
+				}
+				$trequesturl='default';
+			}else{
+				// remove index.php
+				$trequesturl=str_replace('index.php/', '', $trequesturl);
+				$trequesturl=str_replace('index.php', '', $trequesturl);
+			}
+			if(!$this->parsemethod($trequesturl)){
+				/*Show error*/
+				$arr=explode('/', $trequesturl);
+				$err='The '.$arr[0].' method not found!';
+				log_message ( 'error', $err);
+				die($err);
+			}
+		}else{
+			$err='The requested url not content the baseurl. Please check the system section\'s baseurl value in the config.php';
+			$this->log_message ( 'error', $err);
+			die($err);
+		}
+	}		
 	
 }
 

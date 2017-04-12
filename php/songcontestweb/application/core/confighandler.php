@@ -14,9 +14,14 @@ if (! defined ( 'mutyurphpmvc_inited' ))
 
 /** @brief Workframe class*/
 class confighandler{
+	private $m_filename;
+	private $m_directory;
+	private $m_arrayname;
 
 	public function __construct(){
-
+		$this->m_filename='config';
+		$this->m_directory='application';
+		$this->m_arrayname='config';
 	}
 		
 	public static function get_class_name(){
@@ -24,32 +29,48 @@ class confighandler{
 	}
 	
 	public function get_version(){
-		return '1.0.0.1';
+		return '1.0.0.2';
 	}
 	
 	/** @brief get value by group and key*/
 	public function get_value($pconfig_group_name, $pconfig_key_name){
-		require 'application/config.php';
+		require $this->m_directory.'/'.$this->m_filename.'.php';
 		$retval=false;
-		if(isset($config[$pconfig_group_name])){
-			if(isset($config[$pconfig_group_name][$pconfig_key_name])){
-				$retval=$config[$pconfig_group_name][$pconfig_key_name];
+		if(isset(${$this->m_arrayname}[$pconfig_group_name])){
+			if(isset(${$this->m_arrayname}[$pconfig_group_name][$pconfig_key_name])){
+				$retval=${$this->m_arrayname}[$pconfig_group_name][$pconfig_key_name];
 			}
 		}
+//		print_r("$this->m_directory/$this->m_filename - $pconfig_group_name => $pconfig_key_name = '$retval' ");
 		return $retval;
 	}
 	
 	/** @brief Returns the list of keys by group name*/
 	public function get_keys_by_group_name($pconfig_group_name){
-		require 'application/config.php';
+		require $this->m_directory.'/'.$this->m_filename.'.php';
 		$retval=false;
-		if(isset($config[$pconfig_group_name])){
+		if(isset(${$this->m_arrayname}[$pconfig_group_name])){
 			$retval=array();
-			foreach($config[$pconfig_group_name] as $key => $value){
+			foreach(${$this->m_arrayname}[$pconfig_group_name] as $key => $value){
 				$retval[]=$key;
 			}
 		}
 		return $retval;
+	}
+	
+	/** @brief set directory */
+	public function set_directory($directory){
+		$this->m_directory=$directory;
+	}
+
+	/** @brief set filename */
+	public function set_filename($filename){
+		$this->m_filename=$filename;
+	}
+
+	/** @brief set filename */
+	public function set_arrayname($arrayname){
+		$this->m_arrayname=$arrayname;
 	}
 	
 }

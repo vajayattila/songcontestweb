@@ -93,12 +93,25 @@ class workframe extends system{
 		$this->add_classes($array_of_dependencies['registred_classes']);
 		return $model;
 	}
-	
+
+	/** @brief load a view */
 	public function load_view($viewname, $model, $data){
 		$filepath='application/views/'.$viewname.'.php';
 		require_once $filepath;
 		$this->log_message('system', 'Call \''.$viewname.'\' view.');
 	}
+	
+	/** @brief load a model */
+	public function load_extension($extension_name){
+		$filepath='application/extensions/'.$extension_name.'.php';
+		require_once $filepath;
+		$ext=new $extension_name();
+		$array_of_dependencies=$ext->get_array_of_dependencies();
+		$this->add_dependencies($array_of_dependencies['dependencies']);
+		$this->add_classes($array_of_dependencies['registred_classes']);
+		return $ext;
+	}
+	
 	
 }
 
