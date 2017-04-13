@@ -5,15 +5,17 @@ if (! defined ( 'mutyurphpmvc_inited' ))
 
 $lang['english']=array(
 	'caption' => 'Mütyür PHP MVC sample page',
-	'footer' => 'Project home: https://github.com/vajayattila/songcontestweb',
+	'footer_label' => 'Project home',	
+	'footer_anchor' => 'https://github.com/vajayattila/songcontestweb',
 	'controller' => 'Controller: ',
 	'model' => 'Model: ',
 	'message' => 'Hello World!',
 	'message_label' => 'Message: ',
 	'request_uri' => 'Requested URI: ',
-	'registred_classes' => 'Registred classes: ',
+	'registred_classes' => 'Registred classes',
 	'modul' => 'Modul',
 	'installed' => 'Installed',
-	'expected' => 'Expected'
+	'expected' => 'Expected', 
+	'change_language' => 'Language set to'	
 );
 	

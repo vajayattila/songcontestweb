@@ -33,5 +33,10 @@ $config['routes']=array(
 		
 /** @brief languages*/
 $config['languages']=array(
-		'default' => 'english',
+	'default' => 'english',
+);
+
+/** @brief design*/
+$config['design']=array(
+	'css_template' => 'dark' // default, dark, positive, negative
 );

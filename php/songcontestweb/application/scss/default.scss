@@ -1,0 +1,309 @@
+@CHARSET "UTF-8";
+* {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	border: 0;
+}
+	
+$default_template: (
+	templatename default, 
+	body_back_color white,
+	text_color rgba(0, 0, 0, 0.5),
+	header_back_color #d09486,
+	caption_color #ffeee9, 
+	infobox_label #722e2e,
+	infobox_text #722e2e,
+	panel_color #282828,
+	table_caption_back #722e2e,
+	table_border_color #ffe9e9,
+	table_caption_color #ffe9e9,
+	table_header_color #fff0e9,
+	table_item_color1 #ffeae9,
+	table_item_color2 #ffeae9,
+	table_item_color3 #D9EEE2,
+	table_item_color4 #FFEAE9,
+	footer_back_color #d09486,
+	button_back_color #d9eee2,
+	button_border_color #d9eee2,
+	button_color #3d7553,
+	button_back_hover_color #3d7553,
+	button_color_hover #d9eee2
+);
+
+$dark_template: (
+	templatename dark, 
+	body_back_color #404040,
+	text_color rgba(255, 255, 255, 0.5),	
+	header_back_color #d09486,
+	caption_color #ffeee9, 
+	infobox_label #ffe9e9,
+	infobox_text rgba(255, 255, 255, 0.5),
+	panel_color #282828,
+	table_caption_back #722e2e,
+	table_border_color #ffe9e9,
+	table_caption_color #ffe9e9,
+	table_header_color #fff0e9,
+	table_item_color1 #ffeae9,
+	table_item_color2 rgba(255, 255, 255, 0.5),
+	table_item_color3 #D9EEE2,
+	table_item_color4 #FFEAE9,
+	footer_back_color #722e2e,
+	button_back_color #d9eee2,
+	button_border_color #d9eee2,
+	button_color #3d7553,
+	button_back_hover_color #3d7553,
+	button_color_hover #d9eee2			 
+);
+
+$positive_template: (
+	templatename positive, 
+	body_back_color #ffd4ca,
+	text_color rgba(0, 0, 0, 0.5),	
+	header_back_color #d09486,
+	caption_color #ffeee9, 
+	infobox_label #722e2e,
+	infobox_text #722e2e,
+	panel_color #282828,
+	table_caption_back #722e2e,
+	table_border_color #ffe9e9,
+	table_caption_color #ffe9e9,
+	table_header_color #fff0e9,
+	table_item_color1 #ffeae9,
+	table_item_color2 #ffeae9,
+	table_item_color3 #D9EEE2,
+	table_item_color4 #FFEAE9,
+	footer_back_color #d09486,
+	button_back_color #d9eee2,
+	button_border_color #d9eee2,
+	button_color #3d7553,
+	button_back_hover_color #3d7553,
+	button_color_hover #d9eee2		
+);
+
+$negative_template: (
+	templatename negative, 
+	body_back_color #a26355,
+	text_color rgba(255, 255, 255, 0.5),	
+	header_back_color #d09486,
+	caption_color #ffeee9, 
+	infobox_label #722e2e,
+	infobox_text #722e2e,
+	panel_color #282828,
+	table_caption_back #722e2e,
+	table_border_color #ffe9e9,
+	table_caption_color #ffe9e9,
+	table_header_color #fff0e9,
+	table_item_color1 #ffeae9,
+	table_item_color2 #ffeae9,
+	table_item_color3 #D9EEE2,
+	table_item_color4 #FFEAE9,
+	footer_back_color #d09486,
+	button_back_color #d9eee2,
+	button_border_color #d9eee2,
+	button_color #3d7553,
+	button_back_hover_color #3d7553,
+	button_color_hover #d9eee2	  
+); 
+
+
+@function find_value($map, $key) {
+  @each $pair in $map { 
+    @if index($pair, $key) {
+        @return nth($pair, 2);
+    } 
+  }
+}
+
+@mixin theme($list){
+	$template: find_value($list, templatename);	
+	.#{$template +"_"+ body}{ 
+		background-color:find_value($list, body_back_color);
+		color:find_value($list, text_color);
+		margin: auto;
+		max-width: 1000px;		  	
+	}
+	.#{$template +"_"+ header}{ 
+	    border-radius: 30px 30px 0px 0px;
+	    margin: 0px 0px 0px 0px;	    		
+		background-color:find_value($list, header_back_color);
+		h1 { 
+			color:find_value($list, caption_color); 	
+			padding-left: 20px; 
+			padding-bottom: 5px;
+			font-family: "Comic Sans MS", cursive, sans-serif;
+		};
+	}
+	.#{$template +"_"+ infoblokk}{
+	    border-radius: 30px 30px 0px 0px;
+	    background-color: find_value($list, panel_color);
+	    padding: 4px; 
+	    height: auto;
+	    margin: 5px 5px 0px 5px; 		
+		.#{$template +"_"+ infodatas}{
+			margin-top: 10px;
+			display: table;
+			width: 100%;			
+			.#{$template +"_"+ infodatasline}{
+				margin-top: 10px;
+				display: table-row;
+				.#{$template +"_"+ infobox_label}{
+					color: find_value($list, infobox_label);
+					display: inline;
+					width:30%;
+					text-align: right;
+					padding-right: 5px;
+					display: table-cell;
+					font-family: 'lucida sans unicode', lucida, sans-serif;										 	
+				}
+				.#{$template +"_"+ infobox_text}{
+					color: find_value($list, infobox_text);
+					display: inline;
+					width:auto; 	
+					text-align: center;
+					//font-weight: bold;
+					display: table-cell;
+					vertical-align: top;					
+					font-family: 'lucida sans unicode', lucida, sans-serif;					
+				}
+			}
+		}
+	}
+	.#{$template +"_"+ class_list_block}{ 
+	    border-radius: 0px 0px 30px 30px;
+	    background-color: find_value($list, panel_color);
+	    padding: 4px; 
+	    height: auto;
+	    margin: 0px 5px 5px 5px; 		
+		.#{$template +"_"+ classtable}{
+			display: table;
+			width: 100%;
+			font-size: 90%;			
+		}
+		.#{$template +"_"+ table_caption}{
+			display: table-caption;	
+			padding-left: 5px;
+			padding-left: 5px;
+			padding-right: 5px;
+			text-align: center;
+			background-color: find_value($list, table_caption_back);
+    		border-bottom: 1px solid find_value($list, table_border_color);
+    		color: find_value($list, table_caption_color);
+    		height: 25px;
+    		padding-top: 5px;
+			font-family: 'lucida sans unicode', lucida, sans-serif;    		
+		}
+		.#{$template +"_"+ table_header}{
+			display: table-row;
+			.#{$template +"_"+ table_th}{
+    			color: find_value($list, table_header_color);
+				display: table-cell;
+				width: 33%;
+    			border-bottom: 1px solid find_value($list, table_border_color);
+				text-align: center;
+				font-family: 'lucida sans unicode', lucida, sans-serif;				    							
+			}			
+		}			
+		.#{$template +"_"+ table_item}{
+			display: table-row;
+			font-family: 'lucida sans unicode', lucida, sans-serif;			
+			.#{$template +"_"+ table_td1}{
+    			color: find_value($list, table_item_color1);
+				display: table-cell;
+			}			
+			.#{$template +"_"+ table_td2}{
+    			color: find_value($list, table_item_color2);
+				display: table-cell;
+				text-align: center;
+			}			
+			.#{$template +"_"+ table_td3}{
+    			color: find_value($list, table_item_color3);
+				display: table-cell;
+				text-align: center;				
+			}			
+			.#{$template +"_"+ table_td4}{
+    			color: find_value($list, table_item_color4);
+				display: table-cell;
+				text-align: center;				
+			}			
+		}			
+	}		
+	.#{$template +"_"+ footer}{ 
+	    border-radius: 0px 0px 30px 30px;
+	    margin: 0px 0px 0px 0px;	    		
+		background-color:find_value($list, footer_back_color);
+		height: 26px;
+    	border-top: 1px solid find_value($list, table_border_color);
+    	h6 {
+    		margin-left: 15px;
+    		margin-top: 7px;
+    	}
+    	a {
+    		background-color: find_value($list, button_back_color);	
+    		color: find_value($list, button_color);
+    		border: 2px solid find_value($list, button_border_color);
+    		padding: 4px;
+    		text-decoration: none;
+    		margin-left: 5px;
+    		margin-right: 5px;
+    		border-radius: 5px 5px 5px 5px;
+    	}			
+    	a:hover {
+    		background-color: find_value($list, button_back_hover_color);
+    		color: find_value($list, button_color_hover); 
+    	}	
+	}
+	@media screen and(min-width: 380px) and(max-width: 570px) {
+		.#{$template +"_"+ header} h1{
+			font-size: 130%;
+		}	
+		.#{$template +"_"+ infobox_label}{
+			font-size: 90%;
+		}
+		.#{$template +"_"+ infobox_text}{
+			font-size: 90%;
+		}
+		.#{$template +"_"+ table_caption}{
+			font-size: 80%;
+		}
+		.#{$template +"_"+ table_item}{
+			font-size: 80%;
+		}
+		.#{$template +"_"+ footer}{
+			font-size: 90%;
+		}
+		.hideable{
+			display:none;
+		}	
+	}	
+	@media screen and(min-width: 1px) and(max-width: 380px) {
+		.#{$template +"_"+ header} h1{
+			font-size: 80%;
+		}	
+		.#{$template +"_"+ infoblokk}{
+			border-radius: 30px 30px 0px 0px;
+		}
+		.#{$template +"_"+ infobox_label}{
+			font-size: 70%;
+		}
+		.#{$template +"_"+ infobox_text}{
+			font-size: 70%;
+		}
+		.#{$template +"_"+ table_caption}{
+			font-size: 70%;
+		}
+		.#{$template +"_"+ table_item}{
+			font-size: 70%;
+		}
+		.#{$template +"_"+ footer}{
+			font-size: 70%;
+		}
+		.hideable{
+			display:none;
+		}	
+	}	
+}   
+
+@include theme($default_template);
+@include theme($dark_template);
+@include theme($positive_template);
+@include theme($negative_template);

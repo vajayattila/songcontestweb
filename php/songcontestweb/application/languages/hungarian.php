@@ -5,16 +5,18 @@ if (! defined ( 'mutyurphpmvc_inited' ))
 
 $lang['hungarian']=array(
 	'caption' => 'Mütyür PHP MVC minta oldal',
-	'footer' => 'Project home: https://github.com/vajayattila/songcontestweb',
+	'footer_label' => 'A projekt weboldala',
+	'footer_anchor' => 'https://github.com/vajayattila/songcontestweb',
 	'controller' => 'Kontroller: ',
 	'model' => 'Modell: ',
 	'message' => 'Szevasz világ!',
 	'message_label' => 'Üzenet: ',
 	'request_uri' => 'Lekért URI: ',
-	'registred_classes' => 'Regisztrált osztályok: ',
+	'registred_classes' => 'Regisztrált osztályok',
 	'modul' => 'Modul',
 	'installed' => 'Telepített',
-	'expected' => 'Elvárt'	
+	'expected' => 'Elvárt',
+	'change_language' => 'Nyelv beállítása'
 );
 
 

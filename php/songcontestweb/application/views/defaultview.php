@@ -11,7 +11,7 @@ if (! defined ( 'mutyurphpmvc_inited' ))
  *  @date 2017.04.11
  *  @version 1.0.0.0
  */
-
+	
 $lang=$data['lang'];
 
 function get_expected($dependencies, $keypar){
@@ -29,54 +29,89 @@ function get_expected($dependencies, $keypar){
 	return $retval;
 }
 
-function registred_classes($dependencies, $langpar){
-	$retval='<table>';
-	$retval.='<caption>'.$langpar->get_item('registred_classes').'</caption>';
-	$retval.='<tr>';
-	$retval.='<th>'.$langpar->get_item('modul').'</th>';
-	$retval.='<th>'.$langpar->get_item('installed').'</th>';
-	$retval.='<th>'.$langpar->get_item('expected').'</th>';
-	$retval.='</tr>';
+function add_tx($template, $data, $type){
+	$retval='<div class="'.$template.'_table_'.$type.'">';
+	$retval.=$data;
+	$retval.='</div>';
+	return $retval;	
+} 	
+
+function registred_classes($dependencies, $langpar, $template){
+	$retval='<div class="'.$template.'_classtable">';
+	$retval.='<div class="'.$template.'_table_caption">';
+	$retval.=$langpar->get_item('registred_classes');
+	$retval.='</div>';
+	$retval.='<div class="'.$template.'_table_header">';
+	$retval.=add_tx($template, $langpar->get_item('modul'), 'th');
+	$retval.=add_tx($template, $langpar->get_item('installed'), 'th');
+	$retval.=add_tx($template, $langpar->get_item('expected'), 'th');
+	$retval.='</div>';
 	foreach($dependencies['registred_classes'] as $key => $value){
-		$retval.='<tr>';
-		$retval.='<td>'.$key.'</td>';
-		$retval.='<td>'.$value.'</td>';
-		$retval.='<td>'.get_expected($dependencies, $key).'</td>';
-		$retval.='</tr>';
+		$retval.='<div class="'.$template.'_table_item">';
+		$value2=get_expected($dependencies, $key);
+		$retval.=add_tx($template, $key, 'td1');
+		$retval.=add_tx($template, $value, 'td2');
+		$type='';
+		if($value2=='---' || $value2<=$value){
+			$type='td3';
+		} else {
+			$type='td4';
+		}
+		$retval.=add_tx($template, $value2, $type);
+		$retval.='</div>';
 	}
-	$retval.='</table>';
+	$retval.='</div>';
 	return $retval; 
 }
 
+function add_info_line($template, $key, $value){
+	$retval='<div class="'.$template.'_infodatasline">';
+	$retval.='<span class="'.$template.'_infobox_label">'.$key.'</span>';
+	$retval.='<span class="'.$template.'_infobox_text">'.$value.'</span>';
+  	$retval.='</div>';
+  	return $retval;
+}
+
+$template=$data['template'];
 echo '<!DOCTYPE html>';
 echo '<html>';
 echo '<head>';
+echo '<link rel="stylesheet" type="text/css" href="application/css/default.css">';
 echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" >';
 echo '</head>';
-echo '<body>';
-
-echo '<div id="header">';
+echo '<body class="'.$template.'_body">';
+echo '<div class="content">';
+echo '<div class="'.$template.'_infoblokk">';
+echo '<div class="'.$template.'_header">';
 echo '<h1>'.$lang->get_item('caption').'</h1>';
 echo '</div>';
-
-echo '<div id="content">';
-echo '<ul>'.$lang->get_item('controller').'<b>'.$this->get_class_name().'</b></ul>';
-echo '<ul>'.$lang->get_item('model').'<b>'.$model->get_class_name().'</b></ul>';
-echo '<ul>'.$lang->get_item('message_label').'<b>'.$data['message'].'</b></ul>';
-echo '<ul>'.$lang->get_item('request_uri').'<b>'.$data['request_uri'].'</b></ul>';
-echo '<ul>'.registred_classes($data['dependencies'], $lang).'</ul>';
+echo '<div class="'.$template.'_infodatas">';
+echo add_info_line($data['template'], $lang->get_item('controller'), $this->get_class_name());
+echo add_info_line($data['template'], $lang->get_item('model'), $model->get_class_name());
+echo add_info_line($data['template'], $lang->get_item('message_label'), $data['message']);
+echo add_info_line($data['template'], $lang->get_item('request_uri'), $data['request_uri']);
 echo '</div>';
-
-// print_r($data);
-
-echo '<div id="footer">';
-echo '<h6>'.$lang->get_item('footer').' - ';
+echo '</div>';
+echo '<div class="'.$template.'_class_list_block">';
+echo '<div class="'.$template.'_class_list">';
+echo registred_classes($data['dependencies'], $lang, $data['template']);
+echo '</div>';
+echo '<div class="'.$template.'_footer">';
+$anchor=$lang->get_item('footer_anchor');
+echo '<div>';
+echo '<h6>';
+echo '<span class="hideable">'.$lang->get_item('footer_label').':<a href="'.$anchor.'" target="_blank">'.$anchor.'</a>'.'</span>';
+echo '<span>'.$lang->get_item('change_language').':';
 if($lang->get_language()=='english'){
 	echo '<a href="'.$data['baseurl'].'index.php?lang=hun">Magyar</a>';
 } else {
 	echo '<a href="'.$data['baseurl'].'index.php?lang=eng">English</a>';
 }
+echo '</span>';
 echo '</h6>';
+echo '</div>';
+echo '</div>';
+echo '</div>';
 echo '</div>';
 
 echo '</body>';

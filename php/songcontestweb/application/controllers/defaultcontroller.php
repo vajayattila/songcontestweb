@@ -35,12 +35,17 @@ class defaultcontroller extends workframe{
 		} else if($this->get_query_parameter('lang')=='eng'){
 			$lang->set_language('english');
 		}
+		$template=$this->get_config_value('design', 'css_template');
+		if(!$template){
+			$template='default';
+		}
 		$data=array(
 			'baseurl' => $model->get_base_url(),
 			'message' => $model->get_message($lang),
 			'request_uri' => $this->get_request_uri(),
 			'dependencies' => $this->get_array_of_dependencies(),
-			'lang' => $lang
+			'lang' => $lang,
+			'template' => $template,	
 		);
 		$this->load_view('defaultview', $model, $data);		
 	}
