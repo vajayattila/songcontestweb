@@ -14,7 +14,7 @@ if (! defined ( 'mutyurphpmvc_inited' ))
 
 /** @brief system's settings*/
 $config['system']=array(
-	'baseurl' => 'http://localhost:8000/'
+	'baseurl' => 'http://localhost:8001/'
 );
 	
 /** @brief logger's settings*/
@@ -38,5 +38,5 @@ $config['languages']=array(
 
 /** @brief design*/
 $config['design']=array(
-	'css_template' => 'dark' // default, dark, positive, negative
+	'css_template' => 'default' // default, dark, positive, negative
 );
