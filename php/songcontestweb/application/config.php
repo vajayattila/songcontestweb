@@ -14,7 +14,7 @@ if (! defined ( 'mutyurphpmvc_inited' ))
 
 /** @brief system's settings*/
 $config['system']=array(
-	'baseurl' => 'http://localhost:8001/'
+	'baseurl' => 'http://localhost:8000/'
 );
 	
 /** @brief logger's settings*/
