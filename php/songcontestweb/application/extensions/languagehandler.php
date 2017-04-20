@@ -3,14 +3,14 @@
 if (! defined ( 'mutyurphpmvc_inited' ))
 	exit ( 'No direct script access allowed' );
 	
-	/**
-	 *  @file languagehandler.php
-	 *  @brief Language handler class for MutyurPHPMVC. Project home: https://github.com/vajayattila/songcontestweb
-	 *	@author Vajay Attila (vajay.attila@gmail.com)
-	 *  @copyright MIT License (MIT)
-	 *  @date 2017.04.12
-	 *  @version 1.0.0.0
-	 */
+/**
+ *  @file languagehandler.php
+ *  @brief Language handler class for MutyurPHPMVC. Project home: https://github.com/vajayattila/songcontestweb
+ *	@author Vajay Attila (vajay.attila@gmail.com)
+ *  @copyright MIT License (MIT)
+ *  @date 2017.04.12
+ *  @version 1.0.0.0
+ */
 
 class languagehandler extends dependency{
 	private $m_language;

@@ -16,7 +16,6 @@ $lang['hungarian']=array(
 	'modul' => 'Modul',
 	'installed' => 'Telepített',
 	'expected' => 'Elvárt',
-	'change_language' => 'Nyelv beállítása'
+	'change_language' => 'Nyelv beállítása',
+	'set_template' => 'A külső beállítása'
 );
-
-

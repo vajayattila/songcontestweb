@@ -108,6 +108,25 @@ if($lang->get_language()=='english'){
 	echo '<a href="'.$data['baseurl'].'index.php?lang=eng">English</a>';
 }
 echo '</span>';
+echo '<span class="hideable hideable_template">'.$lang->get_item('set_template').':';
+if($template=='default'){
+	echo '<a href="'.$data['baseurl'].'index.php?template=dark">Dark</a>';
+	echo '<a href="'.$data['baseurl'].'index.php?template=positive">Positive</a>';
+	echo '<a href="'.$data['baseurl'].'index.php?template=negative">Negative</a>';
+} else if($template=='dark'){
+	echo '<a href="'.$data['baseurl'].'index.php?template=default">Default</a>';
+	echo '<a href="'.$data['baseurl'].'index.php?template=positive">Positive</a>';
+	echo '<a href="'.$data['baseurl'].'index.php?template=negative">Negative</a>';
+} else if($template=='positive'){
+	echo '<a href="'.$data['baseurl'].'index.php?template=default">Default</a>';
+	echo '<a href="'.$data['baseurl'].'index.php?template=dark">Dark</a>';
+	echo '<a href="'.$data['baseurl'].'index.php?template=negative">Negative</a>';
+} else if($template=='negative'){
+	echo '<a href="'.$data['baseurl'].'index.php?template=default">Default</a>';
+	echo '<a href="'.$data['baseurl'].'index.php?template=dark">Dark</a>';
+	echo '<a href="'.$data['baseurl'].'index.php?template=positive">Positive</a>';
+}
+echo '</span>';
 echo '</h6>';
 echo '</div>';
 echo '</div>';

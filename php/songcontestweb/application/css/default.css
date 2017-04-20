@@ -122,7 +122,7 @@
     background-color: #b69a98;
     color: #3e0600; }
 
-@media screen and (min-width: 380px) and (max-width: 670px) {
+@media screen and (min-width: 380px) and (max-width: 770px) {
   .default_header h1 {
     font-size: 130%; }
 
@@ -285,7 +285,7 @@
     background-color: #3d7553;
     color: #d9eee2; }
 
-@media screen and (min-width: 380px) and (max-width: 670px) {
+@media screen and (min-width: 380px) and (max-width: 770px) {
   .dark_header h1 {
     font-size: 130%; }
 
@@ -448,7 +448,7 @@
     background-color: #b69a98;
     color: #5c1b14; }
 
-@media screen and (min-width: 380px) and (max-width: 670px) {
+@media screen and (min-width: 380px) and (max-width: 770px) {
   .positive_header h1 {
     font-size: 130%; }
 
@@ -611,7 +611,7 @@
     background-color: #5c1b14;
     color: #b69a98; }
 
-@media screen and (min-width: 380px) and (max-width: 670px) {
+@media screen and (min-width: 380px) and (max-width: 770px) {
   .negative_header h1 {
     font-size: 130%; }
 

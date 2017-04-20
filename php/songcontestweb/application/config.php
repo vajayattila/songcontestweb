@@ -14,7 +14,10 @@ if (! defined ( 'mutyurphpmvc_inited' ))
 
 /** @brief system's settings*/
 $config['system']=array(
-	'baseurl' => 'http://localhost:8000/'
+	'baseurl' => 'http://localhost:8000/',
+	'sessionpath' => 'application/session',
+	'sessiontimeout' => 3600,
+	'sessiontype' => 'file'  // file	
 );
 	
 /** @brief logger's settings*/
@@ -23,7 +26,8 @@ $config['logger']=array(
 	'warning' => true,
 	'info' => true,
 	'system' => true,
-	'requestinfo' => true	
+	'requestinfo' => true,	
+	'session' => true,
 );
 
 /** @brief routes*/
