@@ -199,7 +199,7 @@ class sessionlogic extends securitytool{
 			$this->set('ip_address', $_SERVER ['REMOTE_ADDR']);
 			$this->set('user_agent', $_SERVER ['HTTP_USER_AGENT']);
 			$this->set('last_activity', date ( 'c' ));
-			$this->log_message('session', "Create new session: $this->get('session_id') $this->get('ip_address') $this->get('last_activity') $this->get('user_agent')");
+			$this->log_message('session', "Created new session");
 		}
 	}
 	
