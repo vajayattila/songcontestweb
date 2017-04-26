@@ -2,6 +2,8 @@
 
 if (! defined ( 'mutyurphpmvc_inited' ))
 	exit ( 'No direct script access allowed' ); 
+
+require_once('application/extensions/securitytool.php');
 	
 /**
  *  @file sessionhandler.php
@@ -16,6 +18,7 @@ if (! defined ( 'mutyurphpmvc_inited' ))
 class fsesshdlr implements SessionHandlerInterface{
 	private $m_obj;
 	private $m_session_path;
+	private $m_session_lifetime;
 	
 	public function set_object(&$obj){
 		$this->m_obj=$obj;
@@ -33,6 +36,7 @@ class fsesshdlr implements SessionHandlerInterface{
 		if (!is_dir($this->m_session_path)) {
 			mkdir($this->m_session_path, 0777);
 		}
+		$this->gc(3600);
 		return true;
 	}
 	
@@ -67,61 +71,19 @@ class fsesshdlr implements SessionHandlerInterface{
 	{
 		$lifetime=$this->m_obj->get_config_value('system', 'sessiontimeout');
 		if($lifetime){
-			$this->m_session_path=$lifetime;
+			$this->m_session_lifetime=$lifetime;
 		} else {
-			$this->m_session_path=$maxlifetime;
+			$this->m_session_lifetime=$maxlifetime;
 		}
 		foreach (@glob("$this->m_session_path/sess_*") as $file) {
-			if (@filemtime($file) + $maxlifetime < time() && @file_exists($file)) {
-				$this->m_obj->log_message('session', "Destroy expired $this->m_session_path/sess_$id session file ");
+			if (@filemtime($file) + $this->m_session_lifetime< time() && @file_exists($file)) {
+				$this->m_obj->log_message('session', "Destroy expired $this->m_session_path/$file session file ");
 				@unlink($file);
 			}
 		}
 		
 		return true;
 	}
-}
-
-/** @brief security helper class*/
-class securitytool extends dependency{
-	
-	public function __construct(){
-		parent::__construct();
-			securitytool::setup_dependencies(
-				securitytool::get_class_name(), '1.0.0.0',
-				array('confighandler'=>'1.0.0.2')
-		);
-	}		
-	
-	public function get_class_name(){
-		return 'securitytool';
-	}
-	
-	public function get_version(){
-		return '1.0.0.0';
-	}
-	
-	/*
-	 * @brief Generate unique ID
-	 */
-	function getuuid(){
-		return $this->md5touuid(md5(uniqid(rand(), true)));
-	}
-	
-	/*
-	 * @brief Format md5 to uuid
-	 */
-	function md5touuid($md5s) {
-		$md5s =
-		substr ( $md5s, 0, 8 ) . '-' .
-		substr ( $md5s, 8, 4 ) . '-' .
-		substr ( $md5s, 12, 4 ) . '-' .
-		substr ( $md5s, 16, 4 ) . '-' .
-		substr ( $md5s, 20 );
-		return $md5s;
-	}
-	
-	
 }
 
 class sessionlogic extends securitytool{
@@ -277,7 +239,7 @@ class sesshandler extends sessionlogic{
 		if(strtoupper($sesstype)=='FILE'){
 			$this->m_handler=new fsesshdlr();
 		} else {
-			die ('Unknown session type! Please set system/sessiontype value in the config.php!');
+			die ("Unknown session type! Please set the system/sessiontype's value in the config.php!");
 		}
 		$this->m_handler->set_object($this);
 		session_set_save_handler($this->m_handler, true);
