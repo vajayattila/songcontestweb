@@ -11,15 +11,17 @@ if (! defined ( 'mutyurphpmvc_inited' ))
  *  @date 2017.04.11
  *  @version 1.0.0.0
  */
-	
-$lang=$data['lang'];
+
+$lang=$this->m_lang;
 
 function get_expected($dependencies, $keypar){
 	$retval='';
 	foreach($dependencies['dependencies'] as $key => $value){
-		foreach($value as $key2 => $value2){
-			if($key2==$keypar && $retval<$value2){
-				$retval=$value2;
+		if(is_array($value)){
+			foreach($value as $key2 => $value2){
+				if($key2==$keypar && $retval<$value2){
+					$retval=$value2;
+				}
 			}
 		}
 	}
@@ -36,13 +38,14 @@ function add_tx($template, $data, $type){
 	return $retval;	
 } 	
 
-function registred_classes($dependencies, $langpar, $template){
+function registred_classes($dependencies, $langpar, $template, &$obj){
 	$retval='<div class="'.$template.'_classtable">';
 	$retval.='<div class="'.$template.'_table_caption">';
 	$retval.=$langpar->get_item('registred_classes');
 	$retval.='</div>';
 	$retval.='<div class="'.$template.'_table_header">';
 	$retval.=add_tx($template, $langpar->get_item('modul'), 'th');
+	$retval.=add_tx($template, $langpar->get_item('modul_type'), 'th');
 	$retval.=add_tx($template, $langpar->get_item('installed'), 'th');
 	$retval.=add_tx($template, $langpar->get_item('expected'), 'th');
 	$retval.='</div>';
@@ -50,6 +53,7 @@ function registred_classes($dependencies, $langpar, $template){
 		$retval.='<div class="'.$template.'_table_item">';
 		$value2=get_expected($dependencies, $key);
 		$retval.=add_tx($template, $key, 'td1');
+		$retval.=add_tx($template, $obj->get_type_by_class_name($key), 'td11');
 		$retval.=add_tx($template, $value, 'td2');
 		$type='';
 		if($value2=='---' || $value2<=$value){
@@ -94,7 +98,7 @@ echo '</div>';
 echo '</div>';
 echo '<div class="'.$template.'_class_list_block">';
 echo '<div class="'.$template.'_class_list">';
-echo registred_classes($data['dependencies'], $lang, $data['template']);
+echo registred_classes($data['dependencies'], $lang, $data['template'], $this);
 echo '</div>';
 echo '<div class="'.$template.'_footer">';
 $anchor=$lang->get_item('footer_anchor');

@@ -15,9 +15,13 @@ if (! defined ( 'mutyurphpmvc_inited' ))
 /** @brief system's settings*/
 $config['system']=array(
 	'baseurl' => 'http://localhost:8000/',
+// sesshandler extension		
 	'sessionpath' => 'application/session',
 	'sessiontimeout' => 3600,
-	'sessiontype' => 'file'  // file	
+	'sessiontype' => 'file',  // file
+	'sessionisencrypted' => true,
+	'sessionencryptionkey' => 'aklZhj354n56dFfvoodmnbx676743mmh', // key's length is 32	
+	'sessionencryptionnonce' => 'jjdkjd883nndbbvgsf3sd8js', // nonce's length is 24 for libsodium extension
 );
 	
 /** @brief logger's settings*/
@@ -26,18 +30,18 @@ $config['logger']=array(
 	'warning' => true,
 	'info' => true,
 	'system' => true,
-	'requestinfo' => true,	
-	'session' => true,
+	'requestinfo' => true, 
+	'session' => true, // for sesshandler extension
 );
 
 /** @brief routes*/
 $config['routes']=array(
 	'default' => 'defaultcontroller/index',
 );		
-		
+
 /** @brief languages*/
-$config['languages']=array(
-	'default' => 'english',
+$config['languages']=array( // for languagehandler extension
+	'default' => 'english', 
 );
 
 /** @brief design*/

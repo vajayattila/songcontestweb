@@ -77,7 +77,7 @@
     .default_class_list_block .default_table_header .default_table_th {
       color: #3e2700;
       display: table-cell;
-      width: 33%;
+      width: 25%;
       border-bottom: 1px solid #5c4214;
       text-align: center;
       font-family: 'lucida sans unicode', lucida, sans-serif; }
@@ -87,6 +87,11 @@
     .default_class_list_block .default_table_item .default_table_td1 {
       color: #3e2700;
       display: table-cell; }
+    .default_class_list_block .default_table_item .default_table_td11 {
+      color: #3e2700;
+      display: table-cell;
+      text-align: center;
+      font-weight: bold; }
     .default_class_list_block .default_table_item .default_table_td2 {
       color: rgba(0, 0, 0, 0.5);
       display: table-cell;
@@ -99,6 +104,8 @@
       color: #E61600;
       display: table-cell;
       text-align: center; }
+  .default_class_list_block .default_table_item:hover {
+    background-color: #b6ab98; }
 
 .default_footer {
   border-radius: 0px 0px 30px 30px;
@@ -240,7 +247,7 @@
     .dark_class_list_block .dark_table_header .dark_table_th {
       color: #fff0e9;
       display: table-cell;
-      width: 33%;
+      width: 25%;
       border-bottom: 1px solid #ffe9e9;
       text-align: center;
       font-family: 'lucida sans unicode', lucida, sans-serif; }
@@ -250,6 +257,11 @@
     .dark_class_list_block .dark_table_item .dark_table_td1 {
       color: #ffeae9;
       display: table-cell; }
+    .dark_class_list_block .dark_table_item .dark_table_td11 {
+      color: #ffeae9;
+      display: table-cell;
+      text-align: center;
+      font-weight: bold; }
     .dark_class_list_block .dark_table_item .dark_table_td2 {
       color: rgba(255, 255, 255, 0.5);
       display: table-cell;
@@ -262,6 +274,8 @@
       color: #FFEAE9;
       display: table-cell;
       text-align: center; }
+  .dark_class_list_block .dark_table_item:hover {
+    background-color: #722e2e; }
 
 .dark_footer {
   border-radius: 0px 0px 30px 30px;
@@ -403,7 +417,7 @@
     .positive_class_list_block .positive_table_header .positive_table_th {
       color: #3e2700;
       display: table-cell;
-      width: 33%;
+      width: 25%;
       border-bottom: 1px solid #5c4214;
       text-align: center;
       font-family: 'lucida sans unicode', lucida, sans-serif; }
@@ -413,6 +427,11 @@
     .positive_class_list_block .positive_table_item .positive_table_td1 {
       color: #3e2700;
       display: table-cell; }
+    .positive_class_list_block .positive_table_item .positive_table_td11 {
+      color: #3e2700;
+      display: table-cell;
+      text-align: center;
+      font-weight: bold; }
     .positive_class_list_block .positive_table_item .positive_table_td2 {
       color: rgba(0, 0, 0, 0.5);
       display: table-cell;
@@ -425,6 +444,8 @@
       color: #FFEAE9;
       display: table-cell;
       text-align: center; }
+  .positive_class_list_block .positive_table_item:hover {
+    background-color: #b6ab98; }
 
 .positive_footer {
   border-radius: 0px 0px 30px 30px;
@@ -566,7 +587,7 @@
     .negative_class_list_block .negative_table_header .negative_table_th {
       color: #b6ab98;
       display: table-cell;
-      width: 33%;
+      width: 25%;
       border-bottom: 1px solid #8f7e60;
       text-align: center;
       font-family: 'lucida sans unicode', lucida, sans-serif; }
@@ -576,6 +597,11 @@
     .negative_class_list_block .negative_table_item .negative_table_td1 {
       color: #b6ab98;
       display: table-cell; }
+    .negative_class_list_block .negative_table_item .negative_table_td11 {
+      color: #b6ab98;
+      display: table-cell;
+      text-align: center;
+      font-weight: bold; }
     .negative_class_list_block .negative_table_item .negative_table_td2 {
       color: rgba(255, 255, 255, 0.5);
       display: table-cell;
@@ -588,6 +614,8 @@
       color: #FFEAE9;
       display: table-cell;
       text-align: center; }
+  .negative_class_list_block .negative_table_item:hover {
+    background-color: #3e2700; }
 
 .negative_footer {
   border-radius: 0px 0px 30px 30px;

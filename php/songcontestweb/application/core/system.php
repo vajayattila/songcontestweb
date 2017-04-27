@@ -4,12 +4,12 @@ if (! defined ( 'mutyurphpmvc_inited' ))
 	exit ( 'No direct script access allowed' );
 
 /**
- *  @file helper.php
- *  @brief Helper class for SongContestWeb. Project home: https://github.com/vajayattila/songcontestweb
+ *  @file system.php
+ *  @brief System classes for MutyurPHPMVC. Project home: https://github.com/vajayattila/songcontestweb
  *	@author Vajay Attila (vajay.attila@gmail.com)
  *  @copyright MIT License (MIT)
- *  @date 2017.04.07
- *  @version 1.0.0.0
+ *  @date 2017.04.07-2017.04.27
+ *  @version 1.0.0.2
  */
 
 require_once('application/core/dependency.php');
@@ -21,7 +21,7 @@ class helper extends dependency{
 		parent::__construct();
 		// Setup dependencies
 		helper::setup_dependencies(
-			helper::get_class_name(), '1.0.0.0',
+			helper::get_class_name(), helper::get_version(), 'core',
 			array('dependency'=>'1.0.0.3')	
 		);
 	}
@@ -35,11 +35,20 @@ class helper extends dependency{
 		return 'helper';
 	}
 	
-	protected function extension_loaded($p_extension_name){
+	public function get_version(){
+		return '1.0.0.2';
+	}
+	
+	protected function extension_loaded($p_extension_name, $die_if_not_exists=true){
+		$this->log_message('system', "Check extension exists: $p_extension_name");
 		$retval=extension_loaded ($p_extension_name);
-		if(!$retval){
+		if(!$retval && $die_if_not_exists){
+			$this->log_message('system', "Loading of extension is not loaded. Application exit.");
 			die('Please load the following extension in the php.ini: '.$p_extension_name);
+		}else{
+			$this->log_message('system', "Extension is loaded.");
 		}
+		return $retval;
 	}
 	
 }
@@ -58,7 +67,7 @@ class urlhandler extends helper{
 		
 		// Setup dependencies
 		urlhandler::setup_dependencies(
-			urlhandler::get_class_name(), '1.0.0.2',
+			urlhandler::get_class_name(), urlhandler::get_version(), 'core',
 			array(
 				'helper'=>'1.0.0.0'
 			)
@@ -75,6 +84,10 @@ class urlhandler extends helper{
 	 */
 	public function get_class_name() {
 		return 'urlhandler';
+	}
+	
+	public function get_version(){
+		return '1.0.0.2';
 	}
 	
 	/**
@@ -230,9 +243,9 @@ class system extends urlhandler{
 		parent::__construct();
 		// Setup dependencies
 		system::setup_dependencies(
-			system::get_class_name(), '1.0.0.2',
+			system::get_class_name(), system::get_version(), 'core',
 			array(
-			  'urlhandler'=>'1.0.0.0'
+			  'urlhandler'=>'1.0.0.2'
 			)
 		);
 	}
@@ -244,6 +257,10 @@ class system extends urlhandler{
 	 */
 	public function get_class_name() {
 		return 'system';
+	}
+	
+	public function get_version(){
+		return '1.0.0.2';
 	}
 	
 }

@@ -16,16 +16,20 @@ class defaultmodel extends workframe{
 	
 	public function __construct(){
 		$this->setup_dependencies(
-			$this->get_class_name(), '1.0.0.0',
+			$this->get_class_name(), $this->get_version(), 'model',
 			array(
-				'workframe'=>'1.0.0.2',
-				'languagehandler'=>'1.0.0.0'
+					'workframe'=>'1.0.0.2',
+					'languagehandler'=>'1.0.0.0'
 			)
 		);
 	}
 	
 	public function get_class_name() {
 		return 'defaultmodel';
+	}
+
+	public function get_version(){
+		return '1.0.0.2';
 	}
 	
 	public function get_message($lang){

@@ -18,7 +18,7 @@ class languagehandler extends dependency{
 	
 	public function __construct(){
 		languagehandler::setup_dependencies(
-			languagehandler::get_class_name(), '1.0.0.0',
+			languagehandler::get_class_name(), languagehandler::get_version(), 'extension',
 			array(
 				'confighandler'=>'1.0.0.2'
 			)

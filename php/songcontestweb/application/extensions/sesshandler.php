@@ -7,11 +7,11 @@ require_once('application/extensions/securitytool.php');
 	
 /**
  *  @file sessionhandler.php
- *  @brief Session handler class for MutyurPHPMVC. Project home: https://github.com/vajayattila/songcontestweb
+ *  @brief Session handler classes for MutyurPHPMVC. Project home: https://github.com/vajayattila/songcontestweb
  *	@author Vajay Attila (vajay.attila@gmail.com)
  *  @copyright MIT License (MIT)
- *  @date 2017.04.20
- *  @version 1.0.0.0
+ *  @date 2017.04.20-2017.04.27
+ *  @version 1.0.0.1
  */
 
 /** @brief File session handler interface*/
@@ -19,9 +19,20 @@ class fsesshdlr implements SessionHandlerInterface{
 	private $m_obj;
 	private $m_session_path;
 	private $m_session_lifetime;
+	private $m_securitytool=NULL;
+	private $m_sessionisencrypted=false;
+	private $m_sessionencryptionkey;
 	
 	public function set_object(&$obj){
 		$this->m_obj=$obj;
+		$this->m_sessionisencrypted=$this->m_obj->get_config_value('system', 'sessionisencrypted');
+		if($this->m_sessionisencrypted!==false){
+			$this->m_sessionencryptionkey=$this->m_obj->get_config_value('system', 'sessionencryptionkey');
+			if($this->m_sessionencryptionkey===false){
+				$this->m_obj->log_message('session', "Missing the system/sessionencryptionkey value in config.");
+				die("Missing the system/sessionencryptionkey value in config.");
+			}
+		}
 	}
 	
 	/* Methods */
@@ -44,15 +55,24 @@ class fsesshdlr implements SessionHandlerInterface{
 		return true;
 	}
 	
-	public function read($id)
-	{
+	public function read($id){
 		$this->m_obj->log_message('session', "Read session data from $this->m_session_path/sess_$id");
-		return (string)@file_get_contents("$this->m_session_path/sess_$id");
+		$data=(string)@file_get_contents("$this->m_session_path/sess_$id");
+		if($this->m_sessionisencrypted!==false){
+			$data=$this->m_obj->decodestring($data, $this->m_sessionencryptionkey);
+			if($data===false){
+				$data='';
+			}
+		}
+		return $data;
 	}
 	
-	public function write($id, $data)
-	{
+	public function write($id, $data){
 		$this->m_obj->log_message('session', "Ready: Write session data to $this->m_session_path/sess_$id");
+		$sessionisencrypted=$this->m_obj->get_config_value('system', 'sessionisencrypted');
+		if($this->m_sessionisencrypted!==false){
+			$data=$this->m_obj->encodestring($data, $this->m_sessionencryptionkey);
+		}	
 		return @file_put_contents("$this->m_session_path/sess_$id", $data) === false ? false : true;
 	}
 	
@@ -102,9 +122,9 @@ class sessionlogic extends securitytool{
 		$this->conddefine('SESSION_LASTACTIVITY_MISSING', 7);
 		// Dependencies
 		sessionlogic::setup_dependencies(
-			sessionlogic::get_class_name(), '1.0.0.0',
+			sessionlogic::get_class_name(), sessionlogic::get_version(), 'extension',
 			array(
-				'securitytool'=>'1.0.0.0'
+				'securitytool'=>'1.0.0.1'
 			)
 		);
 		// Get timeout value
@@ -119,7 +139,7 @@ class sessionlogic extends securitytool{
 	}
 	
 	public function get_version(){
-		return '1.0.0.0';
+		return '1.0.0.1';
 	}
 
 	public function set($name, $value){
@@ -226,9 +246,9 @@ class sesshandler extends sessionlogic{
 		parent::__construct();
 		// Dependency
 		sesshandler::setup_dependencies(
-			sesshandler::get_class_name(), '1.0.0.0',
+			sesshandler::get_class_name(), sesshandler::get_version(), 'extension',
 			array(
-				'sessionlogic'=>'1.0.0.0'
+				'sessionlogic'=>'1.0.0.1'
 			)
 		);
 		// set session type
@@ -253,7 +273,7 @@ class sesshandler extends sessionlogic{
 	}
 	
 	public function get_version(){
-		return '1.0.0.0';
+		return '1.0.0.1';
 	}
 	
 }

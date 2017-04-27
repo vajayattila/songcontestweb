@@ -28,7 +28,7 @@ class confighandler{
 		return 'confighandler';	
 	}
 	
-	public function get_version(){
+	public static function get_version(){
 		return '1.0.0.2';
 	}
 	

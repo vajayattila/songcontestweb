@@ -13,14 +13,18 @@ if (! defined ( 'mutyurphpmvc_inited' ))
  */
 
 class defaultcontroller extends workframe{
+	protected $m_lang;
+	protected $m_model;
+	protected $m_session;
 	
 	public function __construct(){
 		$this->setup_dependencies(
-				$this->get_class_name(), '1.0.0.1',
+				$this->get_class_name(), '1.0.0.1', 'controller',	
 			array(
-				'defaultmodel'=>'1.0.0.0',
+				'defaultmodel'=>'1.0.0.2',
 				'workframe'=>'1.0.0.2',
-				'sesshandler'=>'1.0.0.0',
+				'sesshandler'=>'1.0.0.1',
+				'languagehandler'=>'1.0.0.0',
 			)
 		);
 	}
@@ -30,32 +34,32 @@ class defaultcontroller extends workframe{
 	}
 	
 	public function index(){
-		$session=$this->load_extension('sesshandler');
-		$model=$this->load_model('defaultmodel');
-		$lang=$this->load_extension('languagehandler');
-		$slang=$session->get('language');
+		$this->m_session=$this->load_extension('sesshandler');
+		$this->m_model=$this->load_model('defaultmodel');
+		$this->m_lang=$this->load_extension('languagehandler');
+		$slang=$this->m_session->get('language');
 		// set language
 		if($this->get_query_parameter('lang')=='hun'){
-			$lang->set_language('hungarian');
-			$session->set('language', 'hungarian');
+			$this->m_lang->set_language('hungarian');
+			$this->m_session->set('language', 'hungarian');
 		} else if($this->get_query_parameter('lang')=='eng'){
-			$lang->set_language('english');
-			$session->set('language', 'english');
+			$this->m_lang->set_language('english');
+			$this->m_session->set('language', 'english');
 		} else if($slang) {
-			$lang->set_language($slang);
+			$this->m_lang->set_language($slang);
 		}
 		// set template
 		$template=$this->get_query_parameter('template');
 		if($this->get_query_parameter('template')=='default'){
-			$session->set('css_template', 'default');
+			$this->m_session->set('css_template', 'default');
 		} else if($this->get_query_parameter('template')=='dark'){
-			$session->set('css_template', 'dark');
+			$this->m_session->set('css_template', 'dark');
 		} else if($this->get_query_parameter('template')=='positive'){
-			$session->set('css_template', 'positive');
+			$this->m_session->set('css_template', 'positive');
 		} else if($this->get_query_parameter('template')=='negative'){
-			$session->set('css_template', 'negative');
+			$this->m_session->set('css_template', 'negative');
 		} else {
-			$template=$session->get('css_template');
+			$template=$this->m_session->get('css_template');
 		}
 		if(!$template){
 			$template=$this->get_config_value('design', 'css_template');
@@ -64,14 +68,13 @@ class defaultcontroller extends workframe{
 			}
 		}
 		$data=array(
-			'baseurl' => $model->get_base_url(),
-			'message' => $model->get_message($lang),
+			'baseurl' => $this->m_model->get_base_url(),
+				'message' => $this->m_model->get_message($this->m_lang),
 			'request_uri' => $this->get_request_uri(),
 			'dependencies' => $this->get_array_of_dependencies(),
-			'lang' => $lang,
 			'template' => $template,	
 		);
-		$this->load_view('defaultview', $model, $data);		
+		$this->load_view('defaultview', $this->m_model, $data);		
 	}
 	
 }

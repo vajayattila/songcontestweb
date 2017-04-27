@@ -197,7 +197,7 @@ $negative_template: (
 			.#{$template +"_"+ table_th}{
     			color: find_value($list, table_header_color);
 				display: table-cell;
-				width: 33%;
+				width: 25%;
     			border-bottom: 1px solid find_value($list, table_border_color);
 				text-align: center;
 				font-family: 'lucida sans unicode', lucida, sans-serif;				    							
@@ -210,6 +210,12 @@ $negative_template: (
     			color: find_value($list, table_item_color1);
 				display: table-cell;
 			}			
+			.#{$template +"_"+ table_td11}{
+    			color: find_value($list, table_item_color1);
+				display: table-cell;
+				text-align:center;
+				font-weight:bold;
+			}			
 			.#{$template +"_"+ table_td2}{
     			color: find_value($list, table_item_color2);
 				display: table-cell;
@@ -221,11 +227,14 @@ $negative_template: (
 				text-align: center;				
 			}			
 			.#{$template +"_"+ table_td4}{
-    			color: find_value($list, table_item_color4);
+    			color: find_value($list, table_item_color4); 
 				display: table-cell;
 				text-align: center;				
 			}			
-		}			
+		}
+		.#{$template +"_"+ table_item}:hover{
+			background-color: find_value($list, table_caption_back); 
+		}				 
 	}		
 	.#{$template +"_"+ footer}{ 
 	    border-radius: 0px 0px 30px 30px;

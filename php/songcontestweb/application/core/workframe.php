@@ -21,7 +21,7 @@ class workframe extends system{
 		parent::__construct();
 		// Setup dependencies
 		workframe::setup_dependencies(
-			workframe::get_class_name(), '1.0.0.2',
+			workframe::get_class_name(), workframe::get_version(), 'core',
 			//array(
 			  array(
 			  	'system' => '1.0.0.2',
@@ -47,6 +47,10 @@ class workframe extends system{
 		return 'workframe';
 	}
 	
+	public function get_version(){
+		return '1.0.0.2';
+	}
+	
 	/** @brief Which request method was used to access the page; i.e. 'GET', 'HEAD', 'POST', 'PUT'. */
 	public function get_request_method(){
 		if($this->m_request_method===false){
@@ -70,8 +74,10 @@ class workframe extends system{
 		require_once $filepath;
 		$controller=new $controllername();
 		$array_of_dependencies=$this->get_array_of_dependencies();
+		$get_array_of_class_types=$this->get_array_of_class_types();
 		$controller->add_dependencies($array_of_dependencies['dependencies']);
 		$controller->add_classes($array_of_dependencies['registred_classes']);
+		$controller->add_class_types($get_array_of_class_types);
 		if(method_exists ( $controller, $this->get_function_name() )){
 			$this->log_message('system', 'Call \''.$this->get_controller_name().'\' controller\'s \''.$this->get_function_name().'\' function.');
 			$controller->{$this->get_function_name()}();
@@ -89,8 +95,10 @@ class workframe extends system{
 		require_once $filepath;
 		$model=new $modelname();
 		$array_of_dependencies=$model->get_array_of_dependencies();
+		$array_of_class_types=$model->get_array_of_class_types();
 		$this->add_dependencies($array_of_dependencies['dependencies']);
 		$this->add_classes($array_of_dependencies['registred_classes']);
+		$this->add_class_types($array_of_class_types);
 		return $model;
 	}
 
@@ -107,8 +115,10 @@ class workframe extends system{
 		require_once $filepath;
 		$ext=new $extension_name();
 		$array_of_dependencies=$ext->get_array_of_dependencies();
+		$array_of_class_types=$ext->get_array_of_class_types();
 		$this->add_classes($array_of_dependencies['registred_classes']);
 		$this->add_dependencies($array_of_dependencies['dependencies']);
+		$this->add_class_types($array_of_class_types);
 		return $ext;
 	}
 	

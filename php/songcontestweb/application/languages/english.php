@@ -17,5 +17,6 @@ $lang['english']=array(
 	'installed' => 'Installed',
 	'expected' => 'Expected', 
 	'change_language' => 'Language set to',
-	'set_template' => 'Set skin to'
+	'set_template' => 'Set skin to',
+	'modul_type' => 'Type of modul',
 );	
