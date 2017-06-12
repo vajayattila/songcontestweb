@@ -33,7 +33,7 @@ function get_expected($dependencies, $keypar){
 
 function add_tx($template, $data, $type){
 	$retval='<div class="'.$template.'_table_'.$type.'">';
-	$retval.=$data;
+	$retval.=print_r($data, true);
 	$retval.='</div>';
 	return $retval;	
 } 	
@@ -87,7 +87,7 @@ echo '<body class="'.$template.'_body">';
 echo '<div class="content">';
 echo '<div class="'.$template.'_infoblokk">';
 echo '<div class="'.$template.'_header">';
-echo '<h1>'.$lang->get_item('caption').'</h1>';
+echo '<h1>'.$data['caption'].'</h1>';
 echo '</div>';
 echo '<div class="'.$template.'_infodatas">';
 echo add_info_line($data['template'], $lang->get_item('controller'), $this->get_class_name());

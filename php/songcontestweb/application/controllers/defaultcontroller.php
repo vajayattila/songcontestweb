@@ -33,7 +33,7 @@ class defaultcontroller extends workframe{
 		return 'defaultcontroller';
 	}
 	
-	public function index(){
+	public function index($caption=''){
 		$this->m_session=$this->load_extension('sesshandler');
 		$this->m_model=$this->load_model('defaultmodel');
 		$this->m_lang=$this->load_extension('languagehandler');
@@ -69,10 +69,11 @@ class defaultcontroller extends workframe{
 		}
 		$data=array(
 			'baseurl' => $this->m_model->get_base_url(),
-				'message' => $this->m_model->get_message($this->m_lang),
+			'message' => $this->m_model->get_message($this->m_lang),
 			'request_uri' => $this->get_request_uri(),
 			'dependencies' => $this->get_array_of_dependencies(),
 			'template' => $template,	
+			'caption' => $caption!==''?$caption:$this->m_lang->get_item('caption')
 		);
 		$this->load_view('defaultview', $this->m_model, $data);		
 	}

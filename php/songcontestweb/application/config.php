@@ -36,7 +36,9 @@ $config['logger']=array(
 
 /** @brief routes*/
 $config['routes']=array(
-	'default' => 'defaultcontroller/index',
+//	'default' => 'defaultcontroller/index',
+	'default' => 'songcontestwebcontroller/index',
+	'service' => 'songcontestwebcontroller/service'	
 );		
 
 /** @brief languages*/
