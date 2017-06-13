@@ -17,9 +17,10 @@ require_once ('defaultcontroller.php');
 class songcontestwebcontroller extends defaultcontroller{
 	protected $restserver;
 
-	public function __construct(){
-		$this->setup_dependencies(
-			$this->get_class_name(), '1.0.0.0', 'controller',	
+	 function __construct(){
+		parent::__construct();		 
+		songcontestwebcontroller::setup_dependencies(
+			songcontestwebcontroller::get_class_name(), songcontestwebcontroller::get_version(), 'controller',	
 			array(
 				'defaultcontroller' => '1.0.0.1',
 				'songcontestwebserver'=>'1.0.0.0'
@@ -27,6 +28,10 @@ class songcontestwebcontroller extends defaultcontroller{
 		);
 		$this->restserver=$this->load_extension('songcontestwebserver');								
 	}
+
+    public function get_version(){
+        return '1.0.0.0';
+    }
 
 	public function index($caption=''){
 		parent::index('SongContestWeb RestFul server');
@@ -39,5 +44,9 @@ class songcontestwebcontroller extends defaultcontroller{
 	public function service(){
 		$this->restserver->execute();
 	}
+
+	public function test(){
+		$this->restserver->test();
+	}		
 	
 }

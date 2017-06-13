@@ -50,6 +50,14 @@ class helper extends dependency{
 		}
 		return $retval;
 	}
+
+    public function registerobject($target, $object){
+		$array_of_dependencies=$object->get_array_of_dependencies();
+		$array_of_class_types=$object->get_array_of_class_types();
+		$target->add_classes($array_of_dependencies['registred_classes']);
+		$target->add_dependencies($array_of_dependencies['dependencies']);
+		$target->add_class_types($array_of_class_types);
+    }
 	
 }
 

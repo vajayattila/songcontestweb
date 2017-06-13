@@ -38,7 +38,8 @@ $config['logger']=array(
 $config['routes']=array(
 //	'default' => 'defaultcontroller/index',
 	'default' => 'songcontestwebcontroller/index',
-	'service' => 'songcontestwebcontroller/service'	
+	'service' => 'songcontestwebcontroller/service',
+	'test' => 'songcontestwebcontroller/test'			
 );		
 
 /** @brief languages*/

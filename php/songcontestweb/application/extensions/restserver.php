@@ -32,9 +32,7 @@ class restserver extends helper{
 		// Dependency
 		restserver::setup_dependencies(
 			restserver::get_class_name(), restserver::get_version(), 'extension',
-			array(
-                array('helper'=>'1.0.0.1')
-			)
+            array('helper'=>'1.0.0.1')
         );
     }
 
