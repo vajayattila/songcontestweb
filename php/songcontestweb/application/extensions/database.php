@@ -41,7 +41,7 @@ class dbhelper extends helper{
         parent::__construct();        
 		// Dependency
 		dbhelper::setup_dependencies(
-			dbhelper::get_class_name(), sqlitedb::get_version(), 'extension',
+			dbhelper::get_class_name(), dbhelper::get_version(), 'extension',
 			array(
 				'helper'=>'1.0.0.1'
 			)
@@ -53,7 +53,7 @@ class dbhelper extends helper{
 	}
 	
 	public function get_version(){
-		return '1.0.0.0';
+		return '1.0.0.1';
 	}
 
     /** @brief field definition
@@ -220,7 +220,7 @@ class sqlitedb extends dbhelper implements databaseintf {
 		sqlitedb::setup_dependencies(
 			sqlitedb::get_class_name(), sqlitedb::get_version(), 'extension',
 			array(
-				'dbhelper'=>'1.0.0.0'
+				'dbhelper'=>'1.0.0.1'
 			)
 		);
         $this->extension_loaded('sqlite3', true);
@@ -265,7 +265,11 @@ class sqlitedb extends dbhelper implements databaseintf {
 
     public function query($sql){
         $result=$this->db->query($sql);
-        return $result->fetchArray();    
+        $return=array();
+        while($row= $result->fetchArray(SQLITE3_ASSOC)){ 
+            $return[]=$row;
+        } 
+        return $return;
     }    
 
     public function getlasterrormessage(){

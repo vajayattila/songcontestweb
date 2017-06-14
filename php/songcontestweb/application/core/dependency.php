@@ -58,7 +58,7 @@ class dependency{
 	 * @return a string for example: 1.0.0.0
 	 */
 	public function get_version(){
-		return '1.0.0.3';	
+		return '1.0.1.0';	
 	}
 	
 	/**
@@ -176,6 +176,19 @@ class dependency{
 		$retval=false;
 		if(isset($this->m_class_types[$classname])){
 			$retval=$this->m_class_types[$classname];
+		}
+		return $retval;
+	}
+
+	/**
+	 * @brief Return the class version by class name
+	 * @param [in] $classname Name of class
+	 * @retval return the class version string from the m_classes array. 
+	 */
+	public function get_version_by_class_name($classname){
+		$retval=false;
+		if(isset($this->m_classes[$classname])){
+			$retval=$this->m_classes[$classname];
 		}
 		return $retval;
 	}

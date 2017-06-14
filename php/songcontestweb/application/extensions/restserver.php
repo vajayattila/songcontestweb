@@ -23,25 +23,30 @@ class restserver extends helper{
     function __construct(){
         $this->statusCode=200;
         $this->contentType="application/json";
+		// Dependency
+		restserver::setup_dependencies(
+			restserver::get_class_name(), restserver::get_version(), 'extension',
+            array('helper'=>'1.0.0.1')
+        );
+        // for register acctions
+        $this->registeractions();
+    }
+
+    protected function registeractions(){
         $this->registredActions=[
             'GET' => [],
             'POST' => [],
             'PUT' => [],
             'DELETE' => []
         ];
-		// Dependency
-		restserver::setup_dependencies(
-			restserver::get_class_name(), restserver::get_version(), 'extension',
-            array('helper'=>'1.0.0.1')
-        );
-    }
+    }        
 
 	public function get_class_name(){
 		return 'restserver';
 	}
 
     public function get_version(){
-        return '1.0.0.0';
+        return '1.0.0.1';
     }
 
     protected function getAction($method){
