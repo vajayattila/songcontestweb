@@ -61,7 +61,6 @@ class songcontestwebserver extends restserver{
 
     protected function getversion(){
         $vers=$this->dbgetversion();
-        sleep(3);
         $this->response($vers);
     }
 
@@ -70,7 +69,6 @@ class songcontestwebserver extends restserver{
         foreach($rootitems as &$rootitem){
             $rootitem['subItems']=$this->dbgetsubmenuitems($rootitem['id']);
         }
-        sleep(3);        
         $this->response(array('menuitems' => $rootitems));
     }    
 
