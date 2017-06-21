@@ -65,7 +65,8 @@ trait dbmethods{
                     'id' => $uuid,
                     'caption' => $row['caption'],
                     'route' => $row['route'],
-                    'verified' => $row['verified']===1?true:false,
+                    'showifauthenticated' => $db->sqlToBOOL($row['showifauthenticated']),
+                    'showdefault' => $db->sqlToBOOL($row['showdefault']),
                     'subItems' => array()
                 );
             }
@@ -89,7 +90,8 @@ trait dbmethods{
                     'id' => $sirow['uuid'],
                     'caption' => $sirow['caption'],
                     'route' => $sirow['route'],
-                    'verified' => $sirow['verified']===1?true:false
+                    'showifauthenticated' => $db->sqlToBOOL($sirow['showifauthenticated']),
+                    'showdefault' => $db->sqlToBOOL($sirow['showdefault'])
                 );
             }
         } else {
@@ -109,18 +111,21 @@ trait dbmethods{
         return $ret;
     }
 
-    function insertmenu($uuid, $caption, $route, $verified=false, $parent=null){
-        $verified=$verified===true?1:($verified===false?0:$verified);
+    function insertmenu(
+        $uuid, $caption, $route, $showifauthenticated=false, $showdefault=true, $parent=null
+    ){
+        $db=&$this->db;        
+        $showifauthenticated=$db->boolToSql($showifauthenticated);
+        $showdefault=$db->boolToSql($showdefault);
         $parent=$parent===null?$parent='NULL':"'$parent'";
         $db=&$this->db;                
         $ret=$db->exec("insert into menu (
-            uuid, caption, route, verified, parent
+            uuid, caption, route, showifauthenticated, showdefault, parent
         ) values (
-            '$uuid', '$caption', '$route', $verified, $parent
+            '$uuid', '$caption', '$route', $showifauthenticated, $showdefault, $parent
         )");
         return $ret;
     }
      
-
 }
 

@@ -57,7 +57,8 @@ trait initdatabase{
                         ' ', $db->notnull(), $db->unique(), $db->collate('NOCASE'))
                     ),
                     $db->field('route', 'TEXT', $db->set(' ', $db->notnull(), $db->collate('NOCASE'))),
-                    $db->field('verified', 'BOOL', $db->notnull()),
+                    $db->field('showifauthenticated', 'BOOL', $db->notnull()),
+                    $db->field('showdefault', 'BOOL', $db->notnull()),
                     $db->field('parent', 'TEXT', '')
                 )
             );
@@ -112,22 +113,28 @@ trait initdatabase{
         }
         // menus
         if($ret===true){ 
-            $ret=$this->insertmenu($st->getuuid(), 'Home', 'home', false); // defined in dbmethods trait
+            $ret=$this->insertmenu($st->getuuid(), 'Home', 'home', true, true); // defined in dbmethods trait
+        }
+        if($ret===true){ 
+            $ret=$this->insertmenu($st->getuuid(), 'Profile', 'profile', true, false);
         }
         if($ret===true){
             $uuid=$st->getuuid();                    
-            $ret=$this->insertmenu($uuid, 'Login/Registration', 'loginmain', false);
-            $ret=$this->insertmenu($st->getuuid(), 'Login', 'login', false, $uuid);            
-            $ret=$this->insertmenu($st->getuuid(), 'Registration', 'registration', false, $uuid);                        
+            $ret=$this->insertmenu($uuid, 'Login/Registration', 'loginmain', false, true);
+            $ret=$this->insertmenu($st->getuuid(), 'Login', 'login', false, true, $uuid);            
+            $ret=$this->insertmenu($st->getuuid(), 'Registration', 'registration',  false, true, $uuid);                        
         }
         if($ret===true){
             $uuid=$st->getuuid();                    
-            $ret=$this->insertmenu($uuid, 'Base data', 'basedatamain', true);
-            $ret=$this->insertmenu($st->getuuid(), 'Genres', 'genres', true, $uuid);            
-            $ret=$this->insertmenu($st->getuuid(), 'Regions', 'regions', true, $uuid);                        
+            $ret=$this->insertmenu($uuid, 'Base data', 'basedatamain', true, true);
+            $ret=$this->insertmenu($st->getuuid(), 'Genres', 'genres', true, true, $uuid);            
+            $ret=$this->insertmenu($st->getuuid(), 'Regions', 'regions', true, true, $uuid);                        
         }
         if($ret===true){
-            $ret=$this->insertmenu($st->getuuid(), 'About', 'about', false);
+            $ret=$this->insertmenu($st->getuuid(), 'About', 'about', true, true);
+        }
+        if($ret===true){ 
+            $ret=$this->insertmenu($st->getuuid(), 'Logout', 'logout', true, false);
         }
 
         if($ret!==true){
