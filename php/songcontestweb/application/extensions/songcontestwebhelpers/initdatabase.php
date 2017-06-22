@@ -122,7 +122,8 @@ trait initdatabase{
             $uuid=$st->getuuid();                    
             $ret=$this->insertmenu($uuid, 'Login/Registration', 'loginmain', false, true);
             $ret=$this->insertmenu($st->getuuid(), 'Login', 'login', false, true, $uuid);            
-            $ret=$this->insertmenu($st->getuuid(), 'Registration', 'registration',  false, true, $uuid);                        
+            $ret=$this->insertmenu($st->getuuid(), 'Registration', 'registration',  false, true, $uuid);
+            $ret=$this->insertmenu($st->getuuid(), 'Activation', 'activation',  false, true, $uuid);            
         }
         if($ret===true){
             $uuid=$st->getuuid();                    
