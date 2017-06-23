@@ -14,7 +14,7 @@ if (! defined ( 'mutyurphpmvc_inited' ))
 
 /** @brief system's settings*/
 $config['system']=array(
-	'baseurl' => 'http://127.0.0.1:8000/',
+	'baseurl' => 'http://127.0.0.1:8001/',
 // sesshandler extension		
 	'sessionpath' => 'application/session',
 	'sessiontimeout' => 3600,

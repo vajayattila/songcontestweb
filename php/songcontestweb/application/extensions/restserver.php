@@ -111,6 +111,7 @@ class restserver extends helper{
 	protected function set_headers() {
 		header("HTTP/1.1 ".$this->statusCode." ".$this->get_status_message());
 		header("Content-Type:".$this->contentType);
+		header('Access-Control-Allow-Origin: *'); 
 	}
 
 	protected function response($data, $status = 200) {
