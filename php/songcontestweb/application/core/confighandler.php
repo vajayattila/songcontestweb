@@ -34,7 +34,7 @@ class confighandler{
 	
 	/** @brief get value by group and key*/
 	public function get_value($pconfig_group_name, $pconfig_key_name){
-		require $this->m_directory.'/'.$this->m_filename.'.php';
+		require $_SERVER['DOCUMENT_ROOT'].$this->m_directory.'/'.$this->m_filename.'.php';
 		$retval=false;
 		if(isset(${$this->m_arrayname}[$pconfig_group_name])){
 			if(isset(${$this->m_arrayname}[$pconfig_group_name][$pconfig_key_name])){
@@ -47,7 +47,7 @@ class confighandler{
 	
 	/** @brief Returns the list of keys by group name*/
 	public function get_keys_by_group_name($pconfig_group_name){
-		require $this->m_directory.'/'.$this->m_filename.'.php';
+		require $_SERVER['DOCUMENT_ROOT'].$this->m_directory.'/'.$this->m_filename.'.php';
 		$retval=false;
 		if(isset(${$this->m_arrayname}[$pconfig_group_name])){
 			$retval=array();
