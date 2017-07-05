@@ -20,7 +20,7 @@ class confighandler{
 
 	public function __construct(){
 		$this->m_filename='config';
-		$this->m_directory='application';
+		$this->m_directory=APPPATH().'application';
 		$this->m_arrayname='config';
 	}
 		
@@ -34,7 +34,7 @@ class confighandler{
 	
 	/** @brief get value by group and key*/
 	public function get_value($pconfig_group_name, $pconfig_key_name){
-		require $_SERVER['DOCUMENT_ROOT'].$this->m_directory.'/'.$this->m_filename.'.php';
+		require $this->m_directory.'/'.$this->m_filename.'.php';
 		$retval=false;
 		if(isset(${$this->m_arrayname}[$pconfig_group_name])){
 			if(isset(${$this->m_arrayname}[$pconfig_group_name][$pconfig_key_name])){
@@ -47,7 +47,7 @@ class confighandler{
 	
 	/** @brief Returns the list of keys by group name*/
 	public function get_keys_by_group_name($pconfig_group_name){
-		require $_SERVER['DOCUMENT_ROOT'].$this->m_directory.'/'.$this->m_filename.'.php';
+		require $this->m_directory.'/'.$this->m_filename.'.php';
 		$retval=false;
 		if(isset(${$this->m_arrayname}[$pconfig_group_name])){
 			$retval=array();

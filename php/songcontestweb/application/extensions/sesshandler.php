@@ -44,7 +44,7 @@ class fsesshdlr implements SessionHandlerInterface{
 		} else {
 			$this->m_session_path=$save_path;
 		}
-    		$this->m_session_path=$_SERVER['DOCUMENT_ROOT'].$this->m_session_path;
+    		$this->m_session_path=APPPATH().$this->m_session_path;
 		if (!is_dir($this->m_session_path)) {
 			mkdir($this->m_session_path, 0777);
 		}

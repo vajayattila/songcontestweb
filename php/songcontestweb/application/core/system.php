@@ -110,11 +110,15 @@ class urlhandler extends helper{
 	 */
 	protected function parsemethod($turl) {
 		$retval = false;
-		$urlarray = explode ( '/', $turl );
+		$urlarray = explode ( '/', $turl);
 		// $urlarray[1] is the method name
 		// Find method
-		if (isset ( $urlarray [0] )) {
-			$this->m_methodname = $urlarray [0];
+		if (isset ( $urlarray [0] ) ) {
+			if($urlarray [0]==''){
+				$this->m_methodname = 'default';
+			}else{
+				$this->m_methodname = $urlarray [0];
+			}
 			$this->log_message ('requestinfo', 'found methodname=' . print_r ( $this->m_methodname, true ) );
 			$value= $this->get_config_value('routes', $this->m_methodname);
 			if ($value!==false) {
