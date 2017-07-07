@@ -45,7 +45,7 @@ class songcontestwebserver extends restserver{
 	protected function registeractions(){
 		$this->registredActions=[
 			'GET' => ['getversion', 'getmenuitems'],
-			'POST' => [],
+			'POST' => ['registration'],
 			'PUT' => [],
 			'DELETE' => []
 		];
@@ -70,6 +70,11 @@ class songcontestwebserver extends restserver{
 			$rootitem['subItems']=$this->dbgetsubmenuitems($rootitem['id']);
 		}
 		$this->response(array('menuitems' => $rootitems));
+	}
+
+	protected function registration(){
+		$this->log_message('debug', print_r($this->requestArgs, true));
+		$this->response('Válasz');
 	}
 
 	function test(){

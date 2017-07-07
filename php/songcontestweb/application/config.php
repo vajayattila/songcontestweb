@@ -32,6 +32,7 @@ $config['logger']=array(
 	'system' => true,
 	'requestinfo' => true, 
 	'session' => true, // for sesshandler extension
+	'debug' => true,
 );
 
 /** @brief routes*/

@@ -49,6 +49,10 @@ class restserver extends helper{
 		return '1.0.0.1';
 	}
 
+	protected function get_content_type(){
+		return $_SERVER["CONTENT_TYPE"];
+	}
+
 	protected function getAction($method){
 		$act=false;
 		switch(strtoupper($method)){
@@ -56,7 +60,18 @@ class restserver extends helper{
 				$this->requestArgs = $this->cleanInputs($_GET);
 				break;
 			case 'POST':
-				$this->requestArgs = $this->cleanInputs($_POST);
+				$postdata=[];
+				$this->log_message('debug', print_r($this->get_content_type(),true));
+				if(
+					(strpos(strtolower($this->get_content_type()),'text/plain')!==false) ||
+					(strpos(strtolower($this->get_content_type()),'application/json')!==false)
+				){
+					$postdata=json_decode(file_get_contents("php://input"), true);
+				} else {
+					$postdata=$_POST;
+				}
+				$this->requestArgs = $this->cleanInputs($postdata);
+				$this->requestArgs = array_merge($this->requestArgs, $this->cleanInputs($_GET));
 				break;
 			case 'PUT':
 			case 'DELETE':
@@ -112,6 +127,8 @@ class restserver extends helper{
 		header("HTTP/1.1 ".$this->statusCode." ".$this->get_status_message());
 		header("Content-Type:".$this->contentType);
 		header('Access-Control-Allow-Origin: *'); 
+		header('Access-Control-Allow-Headers: *'); 
+		header('Access-Control-Allow-Methods: *');
 	}
 
 	protected function response($data, $status = 200) {
