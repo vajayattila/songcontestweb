@@ -12,11 +12,14 @@ if (! defined ( 'mutyurphpmvc_inited' ))
  *  @version 1.0.0.0
  */
 
+require_once ('status.php');
+
 trait dbmethods{
 
     /** @brief Get versions of modules
       */
     protected function dbgetversion(){
+        $statuscode=STATUS_OK;
         $db=&$this->db;
         $vers=array();
         $modules=array();
@@ -44,7 +47,13 @@ trait dbmethods{
                 }
             }
         }else{
-            die($db->getlasterrormessage());
+            $statuscode=STATUS_SQL_ERROR;
+        }
+        $vers['statuscode']=$statuscode;
+        if($statuscode==STATUS_OK){
+            $vers['status']=$this->get_item(STATUS[$statuscode]);
+        }else{
+            $vers['status']=$this->get_item(STATUS[$statuscode]).': '.$db->getlasterrormessage();
         }
         return $vers;
     }
@@ -52,14 +61,15 @@ trait dbmethods{
     /** @brief Get root menu items
       */
     protected function dbgetrootmenuitems(){
+        $statuscode=STATUS_OK;
         $db=&$this->db;
-        $menuitems=array();
+        $menuitems['menuitems']=array();
         $result=$db->query(
             'select * from menu where parent is NULL'
         );
         if($result!==false){
             foreach($result as $row){
-                $menuitem=&$menuitems[];
+                $menuitem=&$menuitems['menuitems'][];
                 $uuid=$row['uuid'];
                 $menuitem=array(
                     'id' => $uuid,
@@ -71,22 +81,31 @@ trait dbmethods{
                 );
             }
         } else {
-            die($db->getlasterrormessage());            
+            $statuscode=STATUS_SQL_ERROR;           
         }
+        if($statuscode==STATUS_OK){
+            $menuitems['status']=$this->get_item(STATUS[$statuscode]);
+        }else{
+            $menuitems['status']=
+                $this->get_item(STATUS[$statuscode]).': '.$db->getlasterrormessage();
+        }
+        $menuitems['statuscode']=$statuscode;
         return $menuitems;
     }    
 
     /** @brief Get sub menu items
       */
     protected function dbgetsubmenuitems($rootitemuuid){
+        $statuscode=STATUS_OK;
         $db=&$this->db;        
         $return=array();                
         $subitems=$db->query(
             "select * from menu where parent is '$rootitemuuid'"
         );
-        if($subitems!==false){                
+        if($subitems!==false){            
+            $return['subitems']=array();    
             foreach($subitems as $sirow){
-                $return[]=array(
+                $return['subitems'][]=array(
                     'id' => $sirow['uuid'],
                     'caption' => $sirow['caption'],
                     'route' => $sirow['route'],
@@ -95,8 +114,15 @@ trait dbmethods{
                 );
             }
         } else {
-            die($db->getlasterrormessage());            
+            $statuscode=STATUS_SQL_ERROR;          
         }
+        if($statuscode==STATUS_OK){
+            $return['status']=$this->get_item(STATUS[$statuscode]);
+        }else{
+            $return['status']=
+                $this->get_item(STATUS[$statuscode]).': '.$db->getlasterrormessage();
+        }
+        $return['statuscode']=$statuscode;
         return $return;
     }         
 

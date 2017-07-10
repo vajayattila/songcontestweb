@@ -19,4 +19,7 @@ $lang['english']=array(
 	'change_language' => 'Language set to',
 	'set_template' => 'Set skin to',
 	'modul_type' => 'Type of modul',
+	// status codes
+	'STATUS_OK' => 'OK',
+	'STATUS_SQL_ERROR' => 'SQL error'
 );	

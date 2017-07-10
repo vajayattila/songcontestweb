@@ -19,4 +19,7 @@ $lang['hungarian']=array(
 	'change_language' => 'Nyelv beállítása',
 	'set_template' => 'A külső beállítása',
 	'modul_type' => 'Típus',
+	// status codes
+	'STATUS_OK' => 'Rendben',
+	'STATUS_SQL_ERROR' => 'SQL hiba'	
 );

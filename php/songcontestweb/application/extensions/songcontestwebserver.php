@@ -12,6 +12,7 @@
 require_once ('restserver.php');
 require_once ('database.php');
 require_once ('securitytool.php');
+require_once ('languagehandler.php');
 require_once ('songcontestwebhelpers/initdatabase.php');
 require_once ('songcontestwebhelpers/dbmethods.php');
 
@@ -20,6 +21,7 @@ class songcontestwebserver extends restserver{
 	protected $db;
 	protected $sectool;
 	protected $dbname='songcontestweb.db';
+	protected $languagehandler;
 
 	function __construct(){
 		parent::__construct();
@@ -29,14 +31,17 @@ class songcontestwebserver extends restserver{
 				'restserver'=>'1.0.0.0',
 				'sqlitedb'=>'1.0.0.0',
 				'securitytool'=>'1.0.0.1',
-				'dependency'=>'1.0.1.0'
+				'dependency'=>'1.0.1.0',
+				'languagehandler'=>'1.0.0.0'
 			)
 		);
 		$this->db=new sqlitedb();
 		$this->sectool=new securitytool();
+		$this->languagehandler=new languagehandler();
 		// for dependencies
 		$this->registerobject($this, $this->db);
 		$this->registerobject($this, $this->sectool);
+		$this->registerobject($this, $this->languagehandler);
 		// for register actions
 		$this->registeractions();
 		$this->checkdatabase(); // defined in initdatabase
@@ -65,11 +70,21 @@ class songcontestwebserver extends restserver{
 	}
 
 	protected function getmenuitems(){
+		$statuscode=STATUS_OK;
+		$status='';
 		$rootitems=$this->dbgetrootmenuitems();
-		foreach($rootitems as &$rootitem){
-			$rootitem['subItems']=$this->dbgetsubmenuitems($rootitem['id']);
+		if($rootitems['statuscode']==STATUS_OK){
+			foreach($rootitems['menuitems'] as &$rootitem){
+				$subitems=$this->dbgetsubmenuitems($rootitem['id']);
+				$rootitem['subItems']=$subitems['subitems'];
+				if($subitems['statuscode']!==STATUS_OK){
+					$rootitems['statuscode']=$subitems['statuscode'];
+					$rootitems['status']=$subitems['status'];
+					break;
+				}
+			}
 		}
-		$this->response(array('menuitems' => $rootitems));
+		$this->response($rootitems);
 	}
 
 	protected function registration(){
@@ -81,5 +96,12 @@ class songcontestwebserver extends restserver{
 		echo 'test is works!';
 	}
 
+	function get_item($key){
+		return $this->languagehandler->get_item($key);
+	}
+
+	function log_message($logtype, $message){
+		return $this->languagehandler->log_message($logtype, $message);
+	}
 
 }

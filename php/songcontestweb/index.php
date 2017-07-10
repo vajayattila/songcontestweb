@@ -9,9 +9,9 @@
  */
 
 error_reporting(E_ALL);
-
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', E_ALL);
+
 
 function APPPATH(){
     return __dir__.'/'; 
@@ -23,6 +23,15 @@ function WITHOUT_APPPATH($url){
         $url = substr($url, strlen($prefix));
     } 
     return $url;
+}
+
+
+function CondDefine($defname, $value)
+{
+    if(!defined($defname))
+    {
+        define($defname, $value);
+    }
 }
 
 require_once('application/core/workframe.php'); 
