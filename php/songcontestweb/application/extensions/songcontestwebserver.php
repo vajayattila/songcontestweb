@@ -88,8 +88,13 @@ class songcontestwebserver extends restserver{
 	}
 
 	protected function registration(){
-		$this->log_message('debug', print_r($this->requestArgs, true));
-		$this->response('Válasz');
+		$username=$this->requestArgs["userName"];
+		$email=$this->requestArgs["email"];
+		$password=$this->requestArgs["password"];
+		$action=$this->requestArgs["action"];
+		$response=$this->dbregistration($username, $email, $password, $action);
+		$this->log_message('debug', print_r($response, true));
+		$this->response($response);
 	}
 
 	function test(){

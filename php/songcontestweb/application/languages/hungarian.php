@@ -21,5 +21,8 @@ $lang['hungarian']=array(
 	'modul_type' => 'Típus',
 	// status codes
 	'STATUS_OK' => 'Rendben',
-	'STATUS_SQL_ERROR' => 'SQL hiba'	
+	'STATUS_SQL_ERROR' => 'SQL hiba',
+	'STATUS_INVALID_ACTION' => 'Érvénytelen művelet',
+	'STATUS_USERNAME_IS_ALREADY_EXISTS' => 'A felhasználónév már szerepel az adatbázisban',
+	'STATUS_EMAIL_IS_ALREADY_EXISTS' => 'Az email cím már használatban van'
 );

@@ -16,6 +16,25 @@ require_once ('status.php');
 
 trait dbmethods{
 
+    protected function setStatus(&$arr, $statuscode){
+        $arr['statuscode']=$statuscode;
+        if($statuscode==STATUS_SQL_ERROR){
+            $arr['status']=$this->get_item(STATUS[$statuscode]).': '.$db->getlasterrormessage();  
+        }else{
+            $arr['status']=$this->get_item(STATUS[$statuscode]);
+        }        
+    }
+
+    protected function getIsExistsStatus($arr, $isexiststatus){
+        $statuscode=$arr['statuscode'];
+        if($statuscode===STATUS_OK){
+            if($arr['isexist']){
+                $statuscode=$isexiststatus;    
+            }  
+        }      
+        return $statuscode;   
+    }
+
     /** @brief Get versions of modules
       */
     protected function dbgetversion(){
@@ -49,12 +68,7 @@ trait dbmethods{
         }else{
             $statuscode=STATUS_SQL_ERROR;
         }
-        $vers['statuscode']=$statuscode;
-        if($statuscode==STATUS_OK){
-            $vers['status']=$this->get_item(STATUS[$statuscode]);
-        }else{
-            $vers['status']=$this->get_item(STATUS[$statuscode]).': '.$db->getlasterrormessage();
-        }
+        $this->setStatus($vers, $statuscode);
         return $vers;
     }
 
@@ -83,13 +97,7 @@ trait dbmethods{
         } else {
             $statuscode=STATUS_SQL_ERROR;           
         }
-        if($statuscode==STATUS_OK){
-            $menuitems['status']=$this->get_item(STATUS[$statuscode]);
-        }else{
-            $menuitems['status']=
-                $this->get_item(STATUS[$statuscode]).': '.$db->getlasterrormessage();
-        }
-        $menuitems['statuscode']=$statuscode;
+        $this->setStatus($menuitems, $statuscode);
         return $menuitems;
     }    
 
@@ -116,13 +124,7 @@ trait dbmethods{
         } else {
             $statuscode=STATUS_SQL_ERROR;          
         }
-        if($statuscode==STATUS_OK){
-            $return['status']=$this->get_item(STATUS[$statuscode]);
-        }else{
-            $return['status']=
-                $this->get_item(STATUS[$statuscode]).': '.$db->getlasterrormessage();
-        }
-        $return['statuscode']=$statuscode;
+        $this->setStatus($return, $statuscode);
         return $return;
     }         
 
@@ -151,6 +153,77 @@ trait dbmethods{
             '$uuid', '$caption', '$route', $showifauthenticated, $showdefault, $parent
         )");
         return $ret;
+    }
+ 
+    function fieldvalueisalreadyexists($table, $fieldname, $fieldvalue){
+        $statuscode=STATUS_OK;
+        $return=array(
+            'isexist' => false    
+        ); 
+        $db=&$this->db; 
+        $fieldvalue=$db->escapeString($fieldvalue);
+        $result=$db->query(
+            "select * from $table where $fieldname is '$fieldvalue'"
+        );
+        if($result!==false){
+            if(0<count($result)){
+                $return['isexist'] = true;   
+            }
+        }else{
+            $statuscode=STATUS_SQL_ERROR;  
+        }
+        $this->setStatus($return, $statuscode);
+        return $return;
+    }
+
+    function dbusernameisalreadyexists($username){
+        return $this->fieldvalueisalreadyexists('user', 'name', $username);
+    }
+
+    function dbemailisalreadyexists($email){
+        return $this->fieldvalueisalreadyexists('user', 'email', $email);
+    }
+
+    function dbregistration($username, $email, $password, $action){
+        $statuscode=STATUS_OK;
+        $db=&$this->db;        
+        $return=array(); 
+        $username=$db->escapeString($username);
+        $email=$db->escapeString($email);
+        $password=$db->escapeString($password);
+        $action=$db->escapeString($action);
+        // check action name
+        if($action!=='registration'){
+            $statuscode=STATUS_INVALID_ACTION;
+        } 
+        if($statuscode===STATUS_OK){
+            $statuscode=$this->getIsExistsStatus(
+                $this->dbusernameisalreadyexists($username),
+                STATUS_USERNAME_IS_ALREADY_EXISTS
+            );
+        }       
+        if($statuscode===STATUS_OK){
+            $statuscode=$this->getIsExistsStatus(
+                $this->dbemailisalreadyexists($email),
+                STATUS_EMAIL_IS_ALREADY_EXISTS
+            );           
+        }
+        if($statuscode===STATUS_OK){
+            $uuid=$this->sectool->getuuid();
+            $pass=md5($password);
+            $verifycode=$this->sectool->getuuid();
+            $verified=$db->boolToSql(false);
+            $ret=$db->exec("insert into user (
+                uuid, name, password, email, verifycode, verified
+            ) values (
+                '$uuid', '$username', '$pass', '$email', '$verifycode', $verified
+            )");
+            if($ret!==true){
+                $statuscode=STATUS_SQL_ERROR;
+            }
+        }
+        $this->setStatus($return, $statuscode);
+        return $return;
     }
      
 }

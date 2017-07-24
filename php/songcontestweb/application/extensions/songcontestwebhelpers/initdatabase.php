@@ -35,7 +35,7 @@ trait initdatabase{
             $db->set(
                 ', ',
                 $db->field('id', 'INTEGER', $db->set(' ', 
-                    $db->primary('PK_TEST', 'ASC', '' , 'AUTOINCREMENT'), $db->notnull(), $db->unique())
+                    $db->primary('PK_VERSION', 'ASC', '' , 'AUTOINCREMENT'), $db->notnull(), $db->unique())
                 ),
                 $db->field('uuid', 'TEXT', $db->set(' ',  $db->notnull(), $db->unique())),
                 $db->field('name', 'TEXT', $db->set(' ', $db->notnull(), $db->unique(), $db->collate('NOCASE'))),
@@ -50,7 +50,7 @@ trait initdatabase{
                 $db->set(
                     ', ',
                     $db->field('id', 'INTEGER', $db->set(' ', 
-                        $db->primary('PK_TEST', 'ASC', '' , 'AUTOINCREMENT'), $db->notnull(), $db->unique())
+                        $db->primary('PK_MENU', 'ASC', '' , 'AUTOINCREMENT'), $db->notnull(), $db->unique())
                     ),
                     $db->field('uuid', 'TEXT', $db->set(' ',  $db->notnull(), $db->unique())),
                     $db->field('caption', 'TEXT', $db->set(
@@ -68,7 +68,7 @@ trait initdatabase{
                 $db->set(
                     ', ',
                     $db->field('id', 'INTEGER', $db->set(' ', 
-                        $db->primary('PK_TEST', 'ASC', '' , 'AUTOINCREMENT'), $db->notnull(), $db->unique())
+                        $db->primary('PK_GENRE', 'ASC', '' , 'AUTOINCREMENT'), $db->notnull(), $db->unique())
                     ),
                     $db->field('uuid', 'TEXT', $db->set(' ',  $db->notnull(), $db->unique())),
                     $db->field('name', 'TEXT', $db->set(' ', $db->notnull(), $db->unique(), $db->collate('NOCASE'))),
@@ -76,6 +76,22 @@ trait initdatabase{
                 )
             );
         }    
+        if($ret===true){
+            $ret=$db->createtableifnotexists('user', // user
+                $db->set(
+                    ', ',
+                    $db->field('id', 'INTEGER', $db->set(' ', 
+                        $db->primary('PK_USER', 'ASC', '' , 'AUTOINCREMENT'), $db->notnull(), $db->unique())
+                    ),
+                    $db->field('uuid', 'TEXT', $db->set(' ',  $db->notnull(), $db->unique())),
+                    $db->field('name', 'TEXT', $db->set(' ', $db->notnull(), $db->unique(), $db->collate('NOCASE'))),
+                    $db->field('password', 'TEXT', $db->notnull()),
+                    $db->field('email', 'TEXT', $db->set(' ', $db->notnull(), $db->unique())),
+                    $db->field('verifycode', 'TEXT', $db->notnull()),
+                    $db->field('verified', 'BOOL', $db->notnull())
+                ) 
+            );
+        }
         if($ret!==true){
             die($db->getlasterrormessage());
         }

@@ -21,5 +21,8 @@ $lang['english']=array(
 	'modul_type' => 'Type of modul',
 	// status codes
 	'STATUS_OK' => 'OK',
-	'STATUS_SQL_ERROR' => 'SQL error'
+	'STATUS_SQL_ERROR' => 'SQL error',
+	'STATUS_INVALID_ACTION' => 'Invalid action',
+	'STATUS_USERNAME_IS_ALREADY_EXISTS' => 'The user name is already in use',
+	'STATUS_EMAIL_IS_ALREADY_EXISTS' => 'The email is already in use'
 );	

@@ -35,6 +35,7 @@ interface databaseintf{
 	public function getlasterrormessage();
 	public function boolToSql($val);
 	public function sqlToBool($val);
+	public function escapeString($str);
 }
 
 class dbhelper extends helper{
@@ -268,8 +269,13 @@ class sqlitedb extends dbhelper implements databaseintf {
 	public function query($sql){
 		$result=$this->db->query($sql);
 		$return=array();
-		while($row= $result->fetchArray(SQLITE3_ASSOC)){ 
-			$return[]=$row;
+		if($result!==false){
+			//$this->log_message('debug', "query info: itt ($sql)");
+			while($row=$result->fetchArray(SQLITE3_ASSOC)){ 
+				$return[]=$row;
+			}
+		} else {
+			$this->log_message('debug', 'query error: '.$this->getlasterrormessage());
 		} 
 		return $return;
 	}    
@@ -284,6 +290,10 @@ class sqlitedb extends dbhelper implements databaseintf {
 
 	public function sqlToBool($val){
 		return $val===1?true:false;
+	}
+
+	public function escapeString($str){
+		return $this->db->escapeString($str);
 	}
 	
 }
