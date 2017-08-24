@@ -135,6 +135,7 @@ class restserver extends helper{
 	   $this->statusCode = $status;
 	   $this->set_headers();
 	   if (is_array($data)){
+		$this->log_message('debug', "response.json=".json_encode($data, JSON_PRETTY_PRINT));
 		  echo json_encode($data, JSON_PRETTY_PRINT);
 	   }
 	   else{
