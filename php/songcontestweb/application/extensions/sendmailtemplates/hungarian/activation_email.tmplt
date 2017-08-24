@@ -1,0 +1,8 @@
+Üdvözlünk a Dalkatalógusban!<br>
+<br>
+Szia {{name}},<br>
+az email címed megerősítéséhez klikkelj az alábbi linkre vagy<br>
+másold be az URL-t a böngésződ címsorába:<br>
+<a href="{{baseurl}}activation?code={{activation_code}}">
+{{baseurl}}activation?code={{activation_code}}
+</a>
