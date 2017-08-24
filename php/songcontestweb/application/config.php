@@ -33,6 +33,7 @@ $config['logger']=array(
 	'requestinfo' => true, 
 	'session' => true, // for sesshandler extension
 	'debug' => true,
+	'sendmail' => true, // for sendmail extension
 );
 
 /** @brief routes*/
@@ -51,4 +52,10 @@ $config['languages']=array( // for languagehandler extension
 /** @brief design*/
 $config['design']=array(
 	'css_template' => 'default' // default, dark, positive, negative
+);
+
+/** @brief sendmail*/
+$config['sendmail']=array(
+	'sender_name' => 'SongCatalog',
+	'sender_email' => 'ata@3szs.hu',
 );
