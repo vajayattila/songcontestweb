@@ -221,7 +221,34 @@ trait dbmethods{
             if($ret!==true){
                 $statuscode=STATUS_SQL_ERROR;
             }
+            $return["id"]=$uuid;
         }
+        $this->setStatus($return, $statuscode);
+        return $return;
+    }
+
+    function dbgetuserbyemail($email){
+        $statuscode=STATUS_OK;
+        $db=&$this->db;
+        $return=array();     
+        $email=$db->escapeString($email);
+        $result=$db->query(
+            "select 
+                uuid, name, email, verifycode, verified 
+            from 
+                user 
+            where upper(email) = upper('$email')"
+        );
+        if($result!==false) {
+            if(0<count($result)) {
+                $return['user'] = $result;  
+            } else {
+                $statuscode=STATUS_USER_NOT_FOUND;
+            }
+        } else {;  
+            $statuscode=STATUS_SQL_ERROR; 
+        }        
+
         $this->setStatus($return, $statuscode);
         return $return;
     }
