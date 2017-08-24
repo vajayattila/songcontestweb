@@ -57,7 +57,15 @@ class helper extends dependency{
 		$target->add_classes($array_of_dependencies['registred_classes']);
 		$target->add_dependencies($array_of_dependencies['dependencies']);
 		$target->add_class_types($array_of_class_types);
-    }
+	}
+	
+	
+	/**
+	 * @brief This function returns the baseurl's value from the config.php
+	 */
+	public function get_base_url(){
+		return $this->get_config_value('system', 'baseurl');	
+	}	
 	
 }
 
@@ -96,13 +104,6 @@ class urlhandler extends helper{
 	
 	public function get_version(){
 		return '1.0.0.2';
-	}
-	
-	/**
-	 * @brief This function returns the baseurl's value from the config.php
-	 */
-	public function get_base_url(){
-		return $this->get_config_value('system', 'baseurl');	
 	}
 	
 	/*
