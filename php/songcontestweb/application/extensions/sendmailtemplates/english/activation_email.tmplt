@@ -1,0 +1,8 @@
+Welcome to SongCatalog!<br>
+<br>
+Hello {{name}},<br>
+to conformation your email address just click to the following link or<br> 
+copy it to your web browser:<br>
+<a href="{{baseurl}}activation?code={{activation_code}}">
+{{baseurl}}activation?code={{activation_code}}
+</a>
