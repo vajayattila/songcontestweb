@@ -15,6 +15,7 @@ if (! defined ( 'mutyurphpmvc_inited' ))
 class languagehandler extends dependency{
 	private $m_language;
 	private $m_config;
+	private $langcodetoname;
 	
 	public function __construct(){
 		languagehandler::setup_dependencies(
@@ -29,6 +30,7 @@ class languagehandler extends dependency{
 		if(!$this->m_config){
 			$this->m_config=new confighandler();
 		}
+		$this->initLangCodeToName();
 	}
 	
 	public function get_class_name(){
@@ -36,7 +38,7 @@ class languagehandler extends dependency{
 	}
 	
 	public function get_version(){
-		return '1.0.0.0';
+		return '1.0.0.1';
 	}
 	
 	public function set_language($language){
@@ -58,6 +60,20 @@ class languagehandler extends dependency{
 	
 	public function get_item($identifier){
 		return $this->m_config->get_value($this->m_language, $identifier);
+	}
+
+	protected function initLangCodeToName(){
+		$this->langcodetoname=array(
+			'hu' => 'hungarian',
+			'hun' => 'hungarian',
+			'en' => 'english',
+			'en' => 'english',
+		);
+	}
+
+	public function get_langname_by_code($lngcode){
+		$lngcode=strtolower($lngcode);
+		return $this->langcodetoname[$lngcode];
 	}
  
 }
