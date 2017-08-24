@@ -18,8 +18,9 @@ class defaultcontroller extends workframe{
 	protected $m_session;
 	
 	public function __construct(){
-		$this->setup_dependencies(
-				$this->get_class_name(), '1.0.0.1', 'controller',	
+		parent::__construct();
+		defaultcontroller::setup_dependencies(
+			defaultcontroller::get_class_name(), '1.0.0.1', 'controller',	
 			array(
 				'defaultmodel'=>'1.0.0.2',
 				'workframe'=>'1.0.0.2',
@@ -27,6 +28,9 @@ class defaultcontroller extends workframe{
 				'languagehandler'=>'1.0.0.0',
 			)
 		);
+		$this->m_session=$this->load_extension('sesshandler');
+		$this->m_model=$this->load_model('defaultmodel');
+		$this->m_lang=$this->load_extension('languagehandler');
 	}
 	
 	public function get_class_name() {
@@ -34,9 +38,6 @@ class defaultcontroller extends workframe{
 	}
 	
 	public function index($caption=''){
-		$this->m_session=$this->load_extension('sesshandler');
-		$this->m_model=$this->load_model('defaultmodel');
-		$this->m_lang=$this->load_extension('languagehandler');
 		$slang=$this->m_session->get('language');
 		// set language
 		if($this->get_query_parameter('lang')=='hun'){
