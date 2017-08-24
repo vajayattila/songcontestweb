@@ -24,5 +24,11 @@ $lang['hungarian']=array(
 	'STATUS_SQL_ERROR' => 'SQL hiba',
 	'STATUS_INVALID_ACTION' => 'Érvénytelen művelet',
 	'STATUS_USERNAME_IS_ALREADY_EXISTS' => 'A felhasználónév már szerepel az adatbázisban',
-	'STATUS_EMAIL_IS_ALREADY_EXISTS' => 'Az email cím már használatban van'
+	'STATUS_EMAIL_IS_ALREADY_EXISTS' => 'Az email cím már használatban van',
+	'STATUS_EMAIL_IS_ALREADY_ACTIVATED' => 'A megadott email cím már aktiválva van',
+	'STATUS_EMAIL_NOT_FOUND' => 'Az megadott email cím nem található',
+	'STATUS_USER_NOT_FOUND' => 'A keresett felhasználó nem található',
+	'STATUS_TEMPLATE_CAN_NOT_LOADED' => 'A template fájl nem betölthető',
+	// activation email
+	'activation_subject' => 'E-mail aktiváció',
 );

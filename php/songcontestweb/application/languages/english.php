@@ -24,5 +24,11 @@ $lang['english']=array(
 	'STATUS_SQL_ERROR' => 'SQL error',
 	'STATUS_INVALID_ACTION' => 'Invalid action',
 	'STATUS_USERNAME_IS_ALREADY_EXISTS' => 'The user name is already in use',
-	'STATUS_EMAIL_IS_ALREADY_EXISTS' => 'The email is already in use'
+	'STATUS_EMAIL_IS_ALREADY_EXISTS' => 'The email is already in use',
+	'STATUS_EMAIL_IS_ALREADY_ACTIVATED' => 'The email is already activated',
+	'STATUS_EMAIL_NOT_FOUND' => 'The specified email is not found',
+	'STATUS_USER_NOT_FOUND' => 'The user is not found',	
+	'STATUS_TEMPLATE_CAN_NOT_LOADED' => 'Can not load template file',
+	// activation email
+	'activation_subject' => 'Activation email',
 );	
