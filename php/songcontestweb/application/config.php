@@ -57,5 +57,5 @@ $config['design']=array(
 /** @brief sendmail*/
 $config['sendmail']=array(
 	'sender_name' => 'SongCatalog',
-	'sender_email' => 'ata@3szs.hu',
+	'sender_email' => 'vajay.attila@gmail.com',
 );
