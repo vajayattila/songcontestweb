@@ -28,13 +28,13 @@ class securitytool extends helper{
 		);
 		// Loads a PHP extensions at runtime
 		$phpversion=phpversion();
-		if('7.1.0'<=$phpversion){ // 7.1.0<=PHP or 
+		if('7.1.0'<=$phpversion && $phpversion<'7.2.0'){ // 7.1.0<=PHP or 
 			if($this->extension_loaded('libsodium')){ // if libsodium extension is exists
 				$this->m_encryptername='libsodium';
 			}
 		} else {
-			if($this->extension_loaded('libsodium', false)){ // if libsodium extension is exists
-				$this->m_encryptername='libsodium';
+			if('7.2.0'<=$phpversion){ // sodium is exists
+				$this->m_encryptername='sodium';
 			} else {
 				if(!function_exists('mcrypt_encrypt')) {
 					if($this->extension_loaded('mcrypt')){ // PHP<7.0.0 try to load mcrypt extension
@@ -123,9 +123,13 @@ class securitytool extends helper{
 			$init_vect = mcrypt_create_iv ( $init_size, MCRYPT_RAND );
 			$mcrypt=mcrypt_encrypt ( $this->m_cipher, $key, gzcompress ( $str, 9 ), $this->m_mode, $init_vect );
 			$retval=base64_encode ( $this->xornoise ( $mcrypt, $key ) );
-		} else { // libsodium
+		} else if($this->m_encryptername=='libsodium') {
 			$encrypted = \Sodium\crypto_secretbox(gzcompress ( $str, 9 ), $this->m_nonce, $key); 
 			$retval=base64_encode ( $this->xornoise ( $encrypted, $key ) );
+		} else {
+			$encrypted = sodium_crypto_secretbox(gzcompress ( $str, 9 ), $this->m_nonce, $key); 
+			$retval=base64_encode ( $this->xornoise ( $encrypted, $key ) );
+
 		}
 		return $retval;
 	}
@@ -146,11 +150,20 @@ class securitytool extends helper{
 				}
 				$retval=gzuncompress ( $decoded );
 			}
-		} else { // libsodium
+		} else { // libsodium or sodium
 			if (strlen ( $str ) != 0) {
 				$noised = base64_decode ( $str );
 				$encoded = $this->xornoise ( $noised, $key );
-				$retval= gzuncompress ( \Sodium\crypto_secretbox_open($encoded, $this->m_nonce, $key));
+				if($this->m_encryptername=='libsodium'){
+					$retval= gzuncompress ( \Sodium\crypto_secretbox_open(
+						$encoded, $this->m_nonce, $key)
+					);
+				} else {
+					$retval= gzuncompress ( sodium_crypto_secretbox_open(
+						$encoded, $this->m_nonce, $key)
+					);
+
+				}
 			}				
 		}
 		return $retval;
