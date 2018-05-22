@@ -135,7 +135,7 @@ class urlhandler extends helper{
 				for($index = 1; isset ( $urlarray [$index] ); $index ++) {
 					$this->m_segments [] = urldecode($urlarray [$index]);
 				}
-				if (sizeof ( $this->m_segments )) {
+				if (isset($this->m_segments) && sizeof ( $this->m_segments )) {
 					$this->log_message ( 'requestinfo', 'found segments=' . print_r ( $this->m_segments, true ) );
 				}
 				$retval = true;
