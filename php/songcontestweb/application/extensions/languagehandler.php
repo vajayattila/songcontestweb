@@ -67,7 +67,7 @@ class languagehandler extends dependency{
 			'hu' => 'hungarian',
 			'hun' => 'hungarian',
 			'en' => 'english',
-			'en' => 'english',
+			'eng' => 'english',
 		);
 	}
 
