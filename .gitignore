@@ -2,3 +2,5 @@ php/songcontestweb/application/session/sess_9fn554n9nbbit54gbvb54erjia
 php/songcontestweb/test.db
 php/songcontestweb/songcontestweb.db
 php/songcontestweb/crash\.txt
+
+*.log
